@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this repository in your research, please cite the associated work."
+title: "Helmet-C Robustness"
+type: software
+authors:
+  - family-names: "Zhao"
+    given-names: "Chunjiang"
+    affiliation: "Hefei University"
+repository-code: "https://github.com/ZhaoChunjiang/helmet-c-robustness"
+url: "https://github.com/ZhaoChunjiang/helmet-c-robustness"
+abstract: >-
+  Reproducible code, protocols, and experimental results for evaluating
+  small-object safety-helmet detection robustness under common image
+  corruptions using the Helmet-C benchmark.
+keywords:
+  - safety helmet detection
+  - object detection
+  - small-object detection
+  - corruption robustness
+  - Helmet-C
+  - YOLO
+license: "MIT"
+version: "1.0.0"
+date-released: "2026-09-18"
+
+preferred-citation:
+  type: article
+  title: "Robustness evaluation and mechanism analysis of small-object safety-helmet detection under common imaging corruptions"
+  authors:
+    - family-names: "Zhao"
+      given-names: "Chunjiang"
+  year: 2026
