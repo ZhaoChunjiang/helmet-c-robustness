@@ -41,10 +41,12 @@ split:
 
   test_policy: closed_during_development
 
-random_seeds:
+training_seeds:
   - 0
   - 42
   - 3407
+
+corruption_seed_base: 3407
 
 evaluation:
   primary_metric: AP50_95
