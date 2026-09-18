@@ -1,0 +1,21 @@
+NEW PAPER V1.0 — A1 ORDINARY CORRUPTION EVALUATION
+STATUS: PASS
+A1 best SHA256: 2bfa235d3e7675d6f24626d9f5c3101a6ebe89c32e2cd8fefd6613f396e69fe7
+
+Clean-Val A0 AP50:95: 0.608987
+Clean-Val A1 AP50:95: 0.609468
+Clean delta: +0.048 pp
+
+Helmet-C-Val A0 mPC15: 0.252511
+Helmet-C-Val A1 mPC15: 0.387931
+mPC15 delta: +13.542 pp
+
+ES-person A0 mPC15: 0.075248
+ES-person A1 mPC15: 0.142128
+ES-person mPC15 delta: +6.688 pp
+
+Interpretation policy:
+- A1 is a baseline, not the paper's innovation.
+- Performance is NOT used as a hard PASS/FAIL criterion.
+- A2/VPCG must use the same assignment manifest and fair training budget.
+- TEST and Helmet-C-Test remain closed.
