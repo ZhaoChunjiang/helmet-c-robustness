@@ -1,0 +1,597 @@
+{
+  "experiment": "FINAL_Y11_A1_SEED42_VAL",
+  "status": "PASS",
+  "completed": "2026-09-13T05:26:47+08:00",
+  "mode": "full75",
+  "split": "val",
+  "conditions": 75,
+  "checkpoint_sha256": "80a9756e71db85f83fe297d277ea29df238ba333a8d1e57fe01015e4c0a94e20",
+  "data_sha256": "08ec5fa03dbc81775183fea4fe9dde94e5f8bc42feded9598c8e65831466c46f",
+  "images": 607,
+  "class_counts": {
+    "0": 747,
+    "1": 9178
+  },
+  "clean_official": {
+    "precision": 0.9378042491053027,
+    "recall": 0.8889884552686393,
+    "mAP50": 0.9399079537133479,
+    "mAP50_95": 0.6087903232171641
+  },
+  "global": {
+    "views": {
+      "ALL/all_macro": {
+        "clean_AP50_95": 0.6087903232171641,
+        "mPC15_AP50_95": 0.3871365135773649,
+        "rPC15": 0.6359110827050184,
+        "absolute_drop15": 0.2216538096397992,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.38556732586998493,
+        "rPC14_no_elastic": 0.6333335323604472,
+        "conditions14": 70
+      },
+      "ALL/hat": {
+        "clean_AP50_95": 0.7363500693654372,
+        "mPC15_AP50_95": 0.5644156232639412,
+        "rPC15": 0.7665044749032704,
+        "absolute_drop15": 0.171934446101496,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.5623360650699059,
+        "rPC14_no_elastic": 0.7636803314957368,
+        "conditions14": 70
+      },
+      "ALL/person": {
+        "clean_AP50_95": 0.48123057706889066,
+        "mPC15_AP50_95": 0.20985740389078855,
+        "rPC15": 0.43608493285900735,
+        "absolute_drop15": 0.2713731731781021,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.2087985866700638,
+        "rPC14_no_elastic": 0.4338847043798158,
+        "conditions14": 70
+      },
+      "ES/all_macro": {
+        "clean_AP50_95": 0.28084814840222067,
+        "mPC15_AP50_95": 0.09409113731418764,
+        "rPC15": 0.335024951560064,
+        "absolute_drop15": 0.18675701108803303,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.09359398594005869,
+        "rPC14_no_elastic": 0.3332547729886285,
+        "conditions14": 70
+      },
+      "ES/hat": {
+        "clean_AP50_95": 0.1616031529204213,
+        "mPC15_AP50_95": 0.04934206571616179,
+        "rPC15": 0.30532860791682354,
+        "absolute_drop15": 0.11226108720425951,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.04858031735466709,
+        "rPC14_no_elastic": 0.3006149105184206,
+        "conditions14": 70
+      },
+      "ES/person": {
+        "clean_AP50_95": 0.40009314388402,
+        "mPC15_AP50_95": 0.13884020891221352,
+        "rPC15": 0.347019715370231,
+        "absolute_drop15": 0.26125293497180646,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.13860765452545026,
+        "rPC14_no_elastic": 0.3464384647531731,
+        "conditions14": 70
+      },
+      "S/all_macro": {
+        "clean_AP50_95": 0.555077567267577,
+        "mPC15_AP50_95": 0.2699727920180686,
+        "rPC15": 0.48636948768626304,
+        "absolute_drop15": 0.28510477524950834,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.26852630568091035,
+        "rPC14_no_elastic": 0.4837635702029125,
+        "conditions14": 70
+      },
+      "S/hat": {
+        "clean_AP50_95": 0.5738913792356228,
+        "mPC15_AP50_95": 0.30395142208204234,
+        "rPC15": 0.5296323190755735,
+        "absolute_drop15": 0.2699399571535805,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.30258375193877457,
+        "rPC14_no_elastic": 0.5272491675023796,
+        "conditions14": 70
+      },
+      "S/person": {
+        "clean_AP50_95": 0.5362637552995312,
+        "mPC15_AP50_95": 0.2359941619540949,
+        "rPC15": 0.4400710650718505,
+        "absolute_drop15": 0.3002695933454363,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.23446885942304613,
+        "rPC14_no_elastic": 0.43722675102680225,
+        "conditions14": 70
+      },
+      "M/all_macro": {
+        "clean_AP50_95": 0.7193939158638145,
+        "mPC15_AP50_95": 0.5097138415587785,
+        "rPC15": 0.7085323218875684,
+        "absolute_drop15": 0.209680074305036,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.5073229568553362,
+        "rPC14_no_elastic": 0.7052088510453506,
+        "conditions14": 70
+      },
+      "L/all_macro": {
+        "clean_AP50_95": 0.8284927233886942,
+        "mPC15_AP50_95": 0.6768125329962059,
+        "rPC15": 0.8169203106913393,
+        "absolute_drop15": 0.15168019039248826,
+        "conditions15": 75,
+        "mPC14_no_elastic_AP50_95": 0.674293139535211,
+        "rPC14_no_elastic": 0.8138793745553041,
+        "conditions14": 70
+      }
+    },
+    "harmfulness_rankings": {
+      "ALL/all_macro": [
+        {
+          "corruption": "zoom_blur",
+          "mean_AP50_95": 0.20661359000498428,
+          "absolute_drop": 0.40217673321217984,
+          "rPC_corruption": 0.3393838274451059
+        },
+        {
+          "corruption": "motion_blur",
+          "mean_AP50_95": 0.32935818841732145,
+          "absolute_drop": 0.27943213479984264,
+          "rPC_corruption": 0.5410043094588327
+        },
+        {
+          "corruption": "glass_blur",
+          "mean_AP50_95": 0.3361322058628219,
+          "absolute_drop": 0.2726581173543422,
+          "rPC_corruption": 0.5521313218096583
+        },
+        {
+          "corruption": "defocus_blur",
+          "mean_AP50_95": 0.3445696718767296,
+          "absolute_drop": 0.2642206513404345,
+          "rPC_corruption": 0.5659907175525468
+        },
+        {
+          "corruption": "snow",
+          "mean_AP50_95": 0.3673912543633044,
+          "absolute_drop": 0.2413990688538597,
+          "rPC_corruption": 0.6034774869971952
+        },
+        {
+          "corruption": "impulse_noise",
+          "mean_AP50_95": 0.38911625627598323,
+          "absolute_drop": 0.21967406694118086,
+          "rPC_corruption": 0.6391630113627479
+        },
+        {
+          "corruption": "frost",
+          "mean_AP50_95": 0.39127546907272875,
+          "absolute_drop": 0.21751485414443533,
+          "rPC_corruption": 0.6427097379029056
+        },
+        {
+          "corruption": "gaussian_noise",
+          "mean_AP50_95": 0.3942766811166455,
+          "absolute_drop": 0.2145136421005186,
+          "rPC_corruption": 0.6476395338103977
+        },
+        {
+          "corruption": "shot_noise",
+          "mean_AP50_95": 0.39629605865090217,
+          "absolute_drop": 0.21249426456626191,
+          "rPC_corruption": 0.650956566715233
+        },
+        {
+          "corruption": "elastic_transform",
+          "mean_AP50_95": 0.40910514148068555,
+          "absolute_drop": 0.19968518173647853,
+          "rPC_corruption": 0.6719967875290159
+        },
+        {
+          "corruption": "pixelate",
+          "mean_AP50_95": 0.41762771436471124,
+          "absolute_drop": 0.19116260885245284,
+          "rPC_corruption": 0.6859959799586656
+        },
+        {
+          "corruption": "contrast",
+          "mean_AP50_95": 0.4401034941101757,
+          "absolute_drop": 0.1686868291069884,
+          "rPC_corruption": 0.7229147332441823
+        },
+        {
+          "corruption": "brightness",
+          "mean_AP50_95": 0.44849721552005517,
+          "absolute_drop": 0.16029310769710892,
+          "rPC_corruption": 0.7367022740275553
+        },
+        {
+          "corruption": "jpeg_compression",
+          "mean_AP50_95": 0.46155602209258095,
+          "absolute_drop": 0.14723430112458313,
+          "rPC_corruption": 0.7581526914775507
+        },
+        {
+          "corruption": "fog",
+          "mean_AP50_95": 0.4751287404508432,
+          "absolute_drop": 0.1336615827663209,
+          "rPC_corruption": 0.7804472612836818
+        }
+      ],
+      "ES/all_macro": [
+        {
+          "corruption": "zoom_blur",
+          "mean_AP50_95": 0.02890538847488011,
+          "absolute_drop": 0.25194275992734055,
+          "rPC_corruption": 0.10292176978672064
+        },
+        {
+          "corruption": "motion_blur",
+          "mean_AP50_95": 0.05176504457000634,
+          "absolute_drop": 0.22908310383221434,
+          "rPC_corruption": 0.1843168447593619
+        },
+        {
+          "corruption": "defocus_blur",
+          "mean_AP50_95": 0.06230866586961449,
+          "absolute_drop": 0.2185394825326062,
+          "rPC_corruption": 0.22185891637205402
+        },
+        {
+          "corruption": "glass_blur",
+          "mean_AP50_95": 0.06764176577584352,
+          "absolute_drop": 0.21320638262637714,
+          "rPC_corruption": 0.2408481813416459
+        },
+        {
+          "corruption": "snow",
+          "mean_AP50_95": 0.08201322675234447,
+          "absolute_drop": 0.1988349216498762,
+          "rPC_corruption": 0.29201982359124573
+        },
+        {
+          "corruption": "frost",
+          "mean_AP50_95": 0.08735392238217435,
+          "absolute_drop": 0.19349422602004632,
+          "rPC_corruption": 0.311036134221078
+        },
+        {
+          "corruption": "elastic_transform",
+          "mean_AP50_95": 0.10105125655199312,
+          "absolute_drop": 0.17979689185022754,
+          "rPC_corruption": 0.35980745156016175
+        },
+        {
+          "corruption": "brightness",
+          "mean_AP50_95": 0.10163159085140912,
+          "absolute_drop": 0.17921655755081156,
+          "rPC_corruption": 0.3618738148341145
+        },
+        {
+          "corruption": "pixelate",
+          "mean_AP50_95": 0.10489006152810158,
+          "absolute_drop": 0.17595808687411907,
+          "rPC_corruption": 0.3734760657132116
+        },
+        {
+          "corruption": "gaussian_noise",
+          "mean_AP50_95": 0.10504640711783493,
+          "absolute_drop": 0.17580174128438575,
+          "rPC_corruption": 0.37403275654639967
+        },
+        {
+          "corruption": "impulse_noise",
+          "mean_AP50_95": 0.10797358821612293,
+          "absolute_drop": 0.17287456018609773,
+          "rPC_corruption": 0.3844554034997127
+        },
+        {
+          "corruption": "shot_noise",
+          "mean_AP50_95": 0.11003778918081966,
+          "absolute_drop": 0.170810359221401,
+          "rPC_corruption": 0.3918052862617683
+        },
+        {
+          "corruption": "contrast",
+          "mean_AP50_95": 0.12236660254806364,
+          "absolute_drop": 0.15848154585415702,
+          "rPC_corruption": 0.43570378955397127
+        },
+        {
+          "corruption": "fog",
+          "mean_AP50_95": 0.13430765440028658,
+          "absolute_drop": 0.14654049400193409,
+          "rPC_corruption": 0.47822161251330725
+        },
+        {
+          "corruption": "jpeg_compression",
+          "mean_AP50_95": 0.14407409549331981,
+          "absolute_drop": 0.13677405290890085,
+          "rPC_corruption": 0.5129964228462067
+        }
+      ],
+      "ES/hat": [
+        {
+          "corruption": "zoom_blur",
+          "mean_AP50_95": 0.003961443337887082,
+          "absolute_drop": 0.1576417095825342,
+          "rPC_corruption": 0.024513403769033066
+        },
+        {
+          "corruption": "snow",
+          "mean_AP50_95": 0.032197583983990155,
+          "absolute_drop": 0.12940556893643113,
+          "rPC_corruption": 0.1992385878748622
+        },
+        {
+          "corruption": "motion_blur",
+          "mean_AP50_95": 0.03816027210959695,
+          "absolute_drop": 0.12344288081082434,
+          "rPC_corruption": 0.23613569054799521
+        },
+        {
+          "corruption": "glass_blur",
+          "mean_AP50_95": 0.0395481556724556,
+          "absolute_drop": 0.1220549972479657,
+          "rPC_corruption": 0.2447239113702838
+        },
+        {
+          "corruption": "defocus_blur",
+          "mean_AP50_95": 0.04149700656364157,
+          "absolute_drop": 0.12010614635677973,
+          "rPC_corruption": 0.25678339694322705
+        },
+        {
+          "corruption": "frost",
+          "mean_AP50_95": 0.0446252283676893,
+          "absolute_drop": 0.116977924552732,
+          "rPC_corruption": 0.27614082746061414
+        },
+        {
+          "corruption": "shot_noise",
+          "mean_AP50_95": 0.0479184865152887,
+          "absolute_drop": 0.1136846664051326,
+          "rPC_corruption": 0.2965195025550358
+        },
+        {
+          "corruption": "brightness",
+          "mean_AP50_95": 0.0484784245877488,
+          "absolute_drop": 0.1131247283326725,
+          "rPC_corruption": 0.29998439827236023
+        },
+        {
+          "corruption": "pixelate",
+          "mean_AP50_95": 0.05352259351598978,
+          "absolute_drop": 0.10808055940443151,
+          "rPC_corruption": 0.33119770591571357
+        },
+        {
+          "corruption": "gaussian_noise",
+          "mean_AP50_95": 0.05536138671588261,
+          "absolute_drop": 0.10624176620453868,
+          "rPC_corruption": 0.34257615470624125
+        },
+        {
+          "corruption": "elastic_transform",
+          "mean_AP50_95": 0.060006542777087515,
+          "absolute_drop": 0.10159661014333378,
+          "rPC_corruption": 0.371320371494464
+        },
+        {
+          "corruption": "impulse_noise",
+          "mean_AP50_95": 0.06059179032204211,
+          "absolute_drop": 0.10101136259837919,
+          "rPC_corruption": 0.37494188217899127
+        },
+        {
+          "corruption": "jpeg_compression",
+          "mean_AP50_95": 0.062356549406873144,
+          "absolute_drop": 0.09924660351354815,
+          "rPC_corruption": 0.3858622080076591
+        },
+        {
+          "corruption": "contrast",
+          "mean_AP50_95": 0.06565773836631614,
+          "absolute_drop": 0.09594541455410516,
+          "rPC_corruption": 0.40628995895054204
+        },
+        {
+          "corruption": "fog",
+          "mean_AP50_95": 0.08624778349993734,
+          "absolute_drop": 0.07535536942048396,
+          "rPC_corruption": 0.5337011187053299
+        }
+      ],
+      "ES/person": [
+        {
+          "corruption": "zoom_blur",
+          "mean_AP50_95": 0.05384933361187314,
+          "absolute_drop": 0.34624381027214685,
+          "rPC_corruption": 0.13459199297722313
+        },
+        {
+          "corruption": "motion_blur",
+          "mean_AP50_95": 0.06536981703041572,
+          "absolute_drop": 0.3347233268536043,
+          "rPC_corruption": 0.1633864964438513
+        },
+        {
+          "corruption": "defocus_blur",
+          "mean_AP50_95": 0.08312032517558739,
+          "absolute_drop": 0.31697281870843264,
+          "rPC_corruption": 0.20775243576701358
+        },
+        {
+          "corruption": "glass_blur",
+          "mean_AP50_95": 0.09573537587923144,
+          "absolute_drop": 0.3043577680047886,
+          "rPC_corruption": 0.23928272039318785
+        },
+        {
+          "corruption": "frost",
+          "mean_AP50_95": 0.13008261639665938,
+          "absolute_drop": 0.27001052748736065,
+          "rPC_corruption": 0.3251308311205854
+        },
+        {
+          "corruption": "snow",
+          "mean_AP50_95": 0.13182886952069883,
+          "absolute_drop": 0.2682642743633212,
+          "rPC_corruption": 0.3294954475873591
+        },
+        {
+          "corruption": "elastic_transform",
+          "mean_AP50_95": 0.14209597032689872,
+          "absolute_drop": 0.25799717355712126,
+          "rPC_corruption": 0.35515722400904187
+        },
+        {
+          "corruption": "gaussian_noise",
+          "mean_AP50_95": 0.15473142751978727,
+          "absolute_drop": 0.24536171636423273,
+          "rPC_corruption": 0.38673851298147016
+        },
+        {
+          "corruption": "brightness",
+          "mean_AP50_95": 0.15478475711506942,
+          "absolute_drop": 0.2453083867689506,
+          "rPC_corruption": 0.3868718059311179
+        },
+        {
+          "corruption": "impulse_noise",
+          "mean_AP50_95": 0.15535538611020375,
+          "absolute_drop": 0.24473775777381626,
+          "rPC_corruption": 0.3882980463050338
+        },
+        {
+          "corruption": "pixelate",
+          "mean_AP50_95": 0.15625752954021338,
+          "absolute_drop": 0.24383561434380663,
+          "rPC_corruption": 0.39055287982017933
+        },
+        {
+          "corruption": "shot_noise",
+          "mean_AP50_95": 0.17215709184635059,
+          "absolute_drop": 0.22793605203766942,
+          "rPC_corruption": 0.43029253182167976
+        },
+        {
+          "corruption": "contrast",
+          "mean_AP50_95": 0.17907546672981112,
+          "absolute_drop": 0.2210176771542089,
+          "rPC_corruption": 0.44758444244103807
+        },
+        {
+          "corruption": "fog",
+          "mean_AP50_95": 0.18236752530063582,
+          "absolute_drop": 0.21772561858338418,
+          "rPC_corruption": 0.4558126728447538
+        },
+        {
+          "corruption": "jpeg_compression",
+          "mean_AP50_95": 0.22579164157976656,
+          "absolute_drop": 0.17430150230425345,
+          "rPC_corruption": 0.56434769010993
+        }
+      ],
+      "S/person": [
+        {
+          "corruption": "zoom_blur",
+          "mean_AP50_95": 0.07416538858734187,
+          "absolute_drop": 0.4620983667121893,
+          "rPC_corruption": 0.1383002074155033
+        },
+        {
+          "corruption": "glass_blur",
+          "mean_AP50_95": 0.14938605298768554,
+          "absolute_drop": 0.38687770231184565,
+          "rPC_corruption": 0.27856824465835034
+        },
+        {
+          "corruption": "defocus_blur",
+          "mean_AP50_95": 0.1566840248176769,
+          "absolute_drop": 0.3795797304818543,
+          "rPC_corruption": 0.29217716705497043
+        },
+        {
+          "corruption": "motion_blur",
+          "mean_AP50_95": 0.16697048573141787,
+          "absolute_drop": 0.3692932695681133,
+          "rPC_corruption": 0.3113588865206006
+        },
+        {
+          "corruption": "snow",
+          "mean_AP50_95": 0.21963788603131018,
+          "absolute_drop": 0.316625869268221,
+          "rPC_corruption": 0.40957063359359613
+        },
+        {
+          "corruption": "frost",
+          "mean_AP50_95": 0.23061943380394734,
+          "absolute_drop": 0.30564432149558385,
+          "rPC_corruption": 0.43004851908205954
+        },
+        {
+          "corruption": "pixelate",
+          "mean_AP50_95": 0.2464490135977399,
+          "absolute_drop": 0.2898147417017913,
+          "rPC_corruption": 0.45956679183004884
+        },
+        {
+          "corruption": "gaussian_noise",
+          "mean_AP50_95": 0.24664461378841623,
+          "absolute_drop": 0.28961914151111495,
+          "rPC_corruption": 0.45993153807430526
+        },
+        {
+          "corruption": "impulse_noise",
+          "mean_AP50_95": 0.24745312670306027,
+          "absolute_drop": 0.2888106285964709,
+          "rPC_corruption": 0.4614392157919471
+        },
+        {
+          "corruption": "elastic_transform",
+          "mean_AP50_95": 0.2573483973887771,
+          "absolute_drop": 0.2789153579107541,
+          "rPC_corruption": 0.4798914617025247
+        },
+        {
+          "corruption": "shot_noise",
+          "mean_AP50_95": 0.28134189662873016,
+          "absolute_drop": 0.254921858670801,
+          "rPC_corruption": 0.5246334361560312
+        },
+        {
+          "corruption": "brightness",
+          "mean_AP50_95": 0.3039165064708328,
+          "absolute_drop": 0.2323472488286984,
+          "rPC_corruption": 0.5667295308836966
+        },
+        {
+          "corruption": "jpeg_compression",
+          "mean_AP50_95": 0.3142560004010906,
+          "absolute_drop": 0.2220077548984406,
+          "rPC_corruption": 0.5860101438807146
+        },
+        {
+          "corruption": "contrast",
+          "mean_AP50_95": 0.31792209253364123,
+          "absolute_drop": 0.21834166276588995,
+          "rPC_corruption": 0.5928465039671853
+        },
+        {
+          "corruption": "fog",
+          "mean_AP50_95": 0.3271175098397557,
+          "absolute_drop": 0.2091462454597755,
+          "rPC_corruption": 0.6099936954662236
+        }
+      ]
+    }
+  }
+}
