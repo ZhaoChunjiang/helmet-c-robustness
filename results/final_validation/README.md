@@ -44,7 +44,5 @@ method and evaluation protocol had been frozen.
 
 The formal seed-0 A0 Helmet-C-Test artifacts are available under:
 
-This summary reports manuscript-level aggregate values and does not
-replace the underlying seed-level experimental outputs.
-
+```text
 results/formal/seed_0/
