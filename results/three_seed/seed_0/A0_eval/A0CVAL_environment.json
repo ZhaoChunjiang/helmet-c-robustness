@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-09-08T18:35:04+08:00",
+  "python": "3.10.8 (main, Nov 24 2022, 14:13:03) [GCC 11.2.0]",
+  "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+  "numpy": "1.26.4",
+  "torch": "2.1.2+cu118",
+  "torch_cuda": "11.8",
+  "ultralytics": "8.4.140",
+  "imagecorruptions": "unknown",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "nvidia_smi": {
+    "command": "nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader",
+    "returncode": 0,
+    "stdout": "NVIDIA GeForce RTX 4090, 570.124.04, 24564 MiB",
+    "stderr": ""
+  }
+}

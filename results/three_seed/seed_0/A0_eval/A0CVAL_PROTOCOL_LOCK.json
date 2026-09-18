@@ -1,0 +1,80 @@
+{
+  "protocol_name": "V1.0_A0CVAL_HELMET_C_VAL_FORMAL",
+  "script_version": "1.0.0-A0CVAL-HELMET-C-VAL-FORMAL",
+  "created": "2026-09-08T18:35:04+08:00",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/checkpoints/A0_baseline/seed_0/best.pt",
+    "sha256": "9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2"
+  },
+  "data": {
+    "path": "/root/autodl-tmp/helmet_yolo_v10/data.yaml",
+    "sha256": "08ec5fa03dbc81775183fea4fe9dde94e5f8bc42feded9598c8e65831466c46f",
+    "split": "val",
+    "val_images": 607,
+    "val_class_objects": {
+      "0": 747,
+      "1": 9178
+    }
+  },
+  "clean_reference": {
+    "evalcal_lock": "/root/autodl-tmp/results/evaluator_calibration/seed_0/EVALCAL_LOCK.json",
+    "evalcal_clean_size": "/root/autodl-tmp/results/evaluator_calibration/seed_0/EVALCAL_clean_size_reference.json",
+    "evalcal_script_version": "1.0.1-EVALCAL-EXACT-ULTRA",
+    "note": "ALL rPC uses official calibrated clean VAL AP; ES/S/M/L rPC uses frozen scale-aware clean VAL AP."
+  },
+  "corruptions": [
+    "gaussian_noise",
+    "shot_noise",
+    "impulse_noise",
+    "defocus_blur",
+    "glass_blur",
+    "motion_blur",
+    "zoom_blur",
+    "snow",
+    "frost",
+    "fog",
+    "brightness",
+    "contrast",
+    "elastic_transform",
+    "pixelate",
+    "jpeg_compression"
+  ],
+  "severities": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "corruption_backend": {
+    "package": "imagecorruptions",
+    "version": "unknown"
+  },
+  "inference": {
+    "imgsz": 640,
+    "requested_batch": 8,
+    "corruption_workers": 12,
+    "prefetch_images": 96,
+    "corruption_seed_base": 3407,
+    "corruption_seed_scheme": "sha256(base_seed|image_id|corruption|severity)->uint32",
+    "cpu_parallel_backend": "ProcessPoolExecutor(spawn)",
+    "cuda_oom_auto_backoff": true,
+    "conf": 0.001,
+    "iou_nms": 0.7,
+    "max_det": 300,
+    "device": "0"
+  },
+  "size_bins_area_at_imgsz": {
+    "ES": "[0, 16^2)",
+    "S": "[16^2, 32^2)",
+    "M": "[32^2, 96^2)",
+    "L": "[96^2, +inf)"
+  },
+  "metrics": {
+    "ALL_headline_evaluator": "calibrated_ultralytics_v8.4.140",
+    "scale_stratified_evaluator": "frozen_scale_aware_diagnostic",
+    "mPC15": "mean AP50:95 over 15 corruptions x 5 severity",
+    "rPC15": "mPC15 / clean AP50:95",
+    "mPC14_no_elastic": "same average excluding elastic_transform"
+  }
+}
