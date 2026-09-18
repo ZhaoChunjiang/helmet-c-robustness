@@ -345,11 +345,26 @@ This repository follows the following rules:
 
 ## Data and Model Availability
 
-The original dataset is not redistributed here.
+The original SHWD images are not redistributed in this repository.
 
-Model checkpoints and large prediction caches are also excluded from the GitHub repository. Their identities and experimental roles are recorded through protocol files, hashes, and reproducibility metadata.
+Model checkpoints and large prediction caches are also excluded from the
+GitHub repository. Their identities and experimental roles are recorded
+through protocol files, SHA256 hashes, and reproducibility metadata.
 
-## License
+The repository contains evaluation outputs, protocol records, summary
+statistics, and scripts required to verify the reported robustness results.
+
+Some frozen protocol files preserve machine-local paths from the original
+experimental environment, for example:
+
+```text
+/root/autodl-tmp/...
+```
+
+These paths are retained only as provenance records of the original run.
+They are not required directory locations for reproduction. Users should
+provide their own paths through the command-line arguments documented in
+this README.
 
 ## Paper
 
@@ -357,17 +372,200 @@ This repository accompanies the manuscript:
 
 **Robustness evaluation and mechanism analysis of small-object safety-helmet detection under common imaging corruptions**
 
-The repository contains the frozen Helmet-C evaluation protocol, formal
-seed-level experimental outputs, and reproducibility utilities associated
-with the manuscript.
+The repository contains the frozen Helmet-C evaluation protocol,
+seed-level experimental outputs, reproducibility utilities, and formal
+independent-test artifacts associated with the manuscript.
 
-Publication metadata and DOI will be added after formal publication.
+Publication metadata, journal information, and DOI will be added after
+formal publication.
 
-## Reproducibility Status
+## Three-Seed Reproducibility
 
-The three-seed YOLO11n comparison uses random seeds:
+The primary YOLO11n three-seed comparison uses the training seeds:
 
 ```text
 0
 42
 3407
+```
+
+The six frozen A0/A1 Helmet-C-Val result sets are stored under:
+
+```text
+results/three_seed/
+```
+
+where:
+
+```text
+A0 = clean-training baseline
+A1 = corruption-aware training (Corr-Aug)
+```
+
+The script:
+
+```text
+scripts/summarize_three_seed.py
+```
+
+recomputes the seed-level values, three-seed means, sample standard
+deviations, and paired A1 - A0 differences directly from the frozen
+JSON result files.
+
+The script:
+
+```text
+scripts/verify_table2.py
+```
+
+verifies that the six frozen result files reproduce the values reported
+in Table 2 of the manuscript.
+
+To run the verification manually from the repository root:
+
+```bash
+python scripts/summarize_three_seed.py
+python scripts/verify_table2.py
+```
+
+A successful verification ends with:
+
+```text
+TABLE 2 VERIFICATION PASSED
+```
+
+## Automated Reproducibility Check
+
+GitHub Actions automatically performs the three-seed reproducibility
+verification whenever the relevant scripts, result files, or workflow
+configuration are changed.
+
+The workflow is defined in:
+
+```text
+.github/workflows/reproducibility.yml
+```
+
+A successful workflow run executes:
+
+```text
+Recompute three-seed summary
+Verify manuscript Table 2
+Upload reproduced summary
+```
+
+and generates the artifact:
+
+```text
+three-seed-reproduced-summary
+```
+
+containing:
+
+```text
+three_seed_raw.csv
+three_seed_summary.csv
+```
+
+The current workflow status is shown by the badge at the top of this README.
+
+## Formal Independent-Test Results
+
+The frozen seed-0 A0 independent Helmet-C-Test outputs generated with the
+final v1.0.4 formal runner are available under:
+
+```text
+results/formal/seed_0/
+```
+
+These files include the protocol lock, environment record, condition-level
+metrics, robustness summaries, and formal figures.
+
+The independent SHWD Test and Helmet-C-Test were evaluated only after the
+method and evaluation protocol had been frozen.
+
+## Validation Summary
+
+Manuscript-level aggregate validation results are summarized in:
+
+```text
+results/final_validation/README.md
+```
+
+This summary includes the three-seed YOLO11n results and additional
+validation evidence such as the YOLOv8n replication and independent-test
+analysis.
+
+The summary document does not replace the underlying seed-level
+experimental outputs.
+
+## Citation
+
+If you use the code, Helmet-C protocol, evaluation procedure, or
+experimental results in this repository, please cite the associated work.
+
+Machine-readable citation metadata is provided in:
+
+```text
+CITATION.cff
+```
+
+Until formal publication metadata is available, the manuscript may be
+cited as:
+
+```text
+Chunjiang Zhao.
+"Robustness evaluation and mechanism analysis of small-object
+safety-helmet detection under common imaging corruptions."
+2026.
+```
+
+The journal name, volume, issue, pages, and DOI will be added after
+formal publication.
+
+## License
+
+This repository is released under the MIT License.
+
+See:
+
+```text
+LICENSE
+```
+
+for the complete license text.
+
+The MIT License applies to the original code and materials released in
+this repository. The original SHWD dataset and third-party software retain
+their respective licenses and are not relicensed by this repository.
+
+## Reproducibility Notes
+
+For strict reproduction, users should pay particular attention to the
+following frozen settings:
+
+```text
+Python             = 3.10
+PyTorch            = 2.1.2+cu118
+Ultralytics        = 8.4.140
+NumPy              = 1.26.4
+imagecorruptions   = 1.1.2
+input resolution   = 640 × 640
+corruption seed    = 3407
+confidence         = 0.001
+NMS IoU            = 0.7
+max detections     = 300
+```
+
+The formal A0 checkpoint is identified by:
+
+```text
+SHA256:
+9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2
+```
+
+The original checkpoint file is not redistributed in this repository.
+
+All reported formal Helmet-C results should be interpreted together with
+the frozen protocol files, environment records, and deterministic
+corruption-generation procedure included in this repository.
