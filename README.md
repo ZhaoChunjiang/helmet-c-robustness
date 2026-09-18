@@ -1,5 +1,7 @@
 # Helmet-C Robustness
 
+[![Reproducibility Check](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/reproducibility.yml)
+
 Reproducible evaluation code for studying corruption robustness in safety-helmet object detection.
 
 This repository contains the formal evaluation protocol, reproducibility utilities, and supporting scripts for the Helmet-C benchmark used in our experiments.
@@ -349,4 +351,23 @@ Model checkpoints and large prediction caches are also excluded from the GitHub 
 
 ## License
 
-This repository is intended for academic research and reproducibility purposes.
+## Paper
+
+This repository accompanies the manuscript:
+
+**Robustness evaluation and mechanism analysis of small-object safety-helmet detection under common imaging corruptions**
+
+The repository contains the frozen Helmet-C evaluation protocol, formal
+seed-level experimental outputs, and reproducibility utilities associated
+with the manuscript.
+
+Publication metadata and DOI will be added after formal publication.
+
+## Reproducibility Status
+
+The three-seed YOLO11n comparison uses random seeds:
+
+```text
+0
+42
+3407
