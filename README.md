@@ -514,7 +514,7 @@ Until formal publication metadata is available, the manuscript may be
 cited as:
 
 ```text
-Chunjiang Zhao.
+Chunjiang Zhao, Tailong Xu, and Jizhou Wang.
 "Robustness evaluation and mechanism analysis of small-object
 safety-helmet detection under common imaging corruptions."
 2026.
