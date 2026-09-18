@@ -1,3 +1,7 @@
+# Convenience installation manifest.
+# Exact frozen core versions are documented in:
+# environment/FORMAL_ENVIRONMENT.md
+
 # Core scientific stack
 numpy==1.26.4
 pandas
@@ -6,6 +10,7 @@ scipy
 # Image processing
 opencv-python
 Pillow
+scikit-image
 imagecorruptions==1.1.2
 
 # Deep learning and detection
