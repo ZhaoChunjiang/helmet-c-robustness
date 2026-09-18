@@ -384,8 +384,10 @@ Model checkpoints and large prediction caches are also excluded from the
 GitHub repository. Their identities and experimental roles are recorded
 through protocol files, SHA256 hashes, and reproducibility metadata.
 
-The repository contains evaluation outputs, protocol records, summary
-statistics, and scripts required to verify the reported robustness results.
+The repository contains frozen evaluation outputs, protocol records,
+summary statistics, and scripts required to verify the primary three-seed
+YOLO11n robustness results. Machine-readable aggregate exports are also
+provided for the additional validation analyses reported in the manuscript.
 
 Some frozen protocol files preserve machine-local paths from the original
 experimental environment, for example:
