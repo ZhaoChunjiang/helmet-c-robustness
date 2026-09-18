@@ -1,0 +1,45 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE / editor
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+
+# Large local datasets
+data/
+dataset/
+datasets/
+
+# Model checkpoints and training outputs
+checkpoints/
+weights/
+runs/
+outputs/
+
+# Temporary files
+*.tmp
+*.log
+
+# Large archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
