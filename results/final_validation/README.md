@@ -35,6 +35,9 @@ Values are mean ± standard deviation across seeds 0, 42, and 3407.
 | Independent SHWD Test | Clean −0.07 pp; mPC15 24.21% → 37.68%; rPC15 40.55% → 63.18% |
 | Test sensitivity | mPC14 23.29% → 37.54%; ES-person mPC15 +7.34 pp |
 
+Machine-readable final validation summaries and exported paper tables are
+available under `results/final_validation/final_report/`.
+
 ## Protocol Note
 
 Development used Train/Val only.
