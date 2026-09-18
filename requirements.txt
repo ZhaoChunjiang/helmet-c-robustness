@@ -9,8 +9,8 @@ Pillow
 imagecorruptions==1.1.2
 
 # Deep learning and detection
-torch
-ultralytics
+ultralytics==8.4.140
+torch==2.1.2
 
 # Configuration and utilities
 PyYAML
