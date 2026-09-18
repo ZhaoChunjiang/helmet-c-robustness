@@ -1,0 +1,19 @@
+FINAL VALIDATION COMPLETE
+STATUS: PASS
+
+YOLO11n three-seed A0/A1:
+  ALL/all_macro
+    delta clean pp = +0.050 ± 0.062
+    delta mPC15 pp = +13.268 ± 0.475
+    delta rPC15 pp = +21.733 ± 0.844
+  ES/person
+    delta clean pp = +0.361 ± 0.861
+    delta mPC15 pp = +6.349 ± 0.401
+    delta rPC15 pp = +15.684 ± 0.771
+
+A3 three-seed net A3-C0:
+  Blur6 ALL = +0.077 ± 0.147 pp
+  Blur6 ES-person = +0.057 ± 0.013 pp
+
+See CSV tables for YOLOv8n, independent TEST, and SHEL5K.
+No further algorithm tuning is permitted after this report.
