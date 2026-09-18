@@ -283,7 +283,7 @@ def main() -> None:
     # Relative Performance under Corruption.
     # Expressed as a percentage of clean-set AP.
     rPC = float(
-        100.0 * mPC / args.clean_ap
+        mPC / args.clean_ap
     )
 
     overall_summary = {
@@ -293,7 +293,7 @@ def main() -> None:
         "num_severities": len(SEVERITIES),
         "num_conditions": len(df),
         "mPC": mPC,
-        "rPC_percent": rPC,
+        "rPC": rPC,
     }
 
     raw_output = (
@@ -360,7 +360,7 @@ def main() -> None:
 
     print(
         f"Helmet-C rPC  : "
-        f"{rPC:.2f}%"
+        f"{rPC:.6f}%"
     )
 
     print(
