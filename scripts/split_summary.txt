@@ -1,0 +1,4 @@
+train_images: 5457
+val_images: 607
+test_images: 1517
+total_images: 7581
