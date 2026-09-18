@@ -42,7 +42,11 @@ Development used Train/Val only.
 The independent SHWD Test and Helmet-C-Test were evaluated after the
 method and evaluation protocol had been frozen.
 
-The formal seed-0 A0 Helmet-C-Test artifacts are available under:
+The formal seed-0 A0 Helmet-C-Test artifacts are available under
+`results/formal/seed_0/`.
 
-```text
-results/formal/seed_0/
+The underlying three-seed A0/A1 Helmet-C-Val outputs are available under
+`results/three_seed/`.
+
+This summary reports manuscript-level aggregate values and does not
+replace the underlying seed-level experimental outputs.
