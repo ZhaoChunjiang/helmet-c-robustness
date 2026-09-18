@@ -1,0 +1,76 @@
+{
+  "protocol_name": "V1.0_A0C_HELMET_C_BASELINE_FORMAL",
+  "script_version": "1.0.4-A0C-PARALLEL-ATOMIC-REPRO",
+  "created": "2026-09-07T06:51:36+08:00",
+  "checkpoint": {
+    "path": "/root/autodl-tmp/checkpoints/A0_baseline/seed_0/best.pt",
+    "sha256": "9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2"
+  },
+  "data": {
+    "path": "/root/autodl-tmp/helmet_yolo_v10/data.yaml",
+    "sha256": "08ec5fa03dbc81775183fea4fe9dde94e5f8bc42feded9598c8e65831466c46f",
+    "test_images": 1517,
+    "test_class_objects": {
+      "0": 1878,
+      "1": 22558
+    }
+  },
+  "clean_reference": {
+    "a0s_metrics": "/root/autodl-tmp/results/A0S_small_object/seed_0/A0S_metrics_by_size_class.csv",
+    "a0s_protocol": "/root/autodl-tmp/results/A0S_small_object/seed_0/A0S_PROTOCOL_LOCK.json",
+    "note": "rPC uses A0-S clean metrics from the same frozen custom size-aware evaluator."
+  },
+  "corruptions": [
+    "gaussian_noise",
+    "shot_noise",
+    "impulse_noise",
+    "defocus_blur",
+    "glass_blur",
+    "motion_blur",
+    "zoom_blur",
+    "snow",
+    "frost",
+    "fog",
+    "brightness",
+    "contrast",
+    "elastic_transform",
+    "pixelate",
+    "jpeg_compression"
+  ],
+  "severities": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "corruption_backend": {
+    "package": "imagecorruptions",
+    "version": "unknown"
+  },
+  "inference": {
+    "imgsz": 640,
+    "requested_batch": 8,
+    "corruption_workers": 12,
+    "prefetch_images": 96,
+    "corruption_seed_base": 3407,
+    "corruption_seed_scheme": "sha256(base_seed|image_id|corruption|severity)->uint32",
+    "cpu_parallel_backend": "ProcessPoolExecutor(spawn)",
+    "cuda_oom_auto_backoff": true,
+    "conf": 0.001,
+    "iou_nms": 0.7,
+    "max_det": 300,
+    "device": "0"
+  },
+  "size_bins_area_at_imgsz": {
+    "ES": "[0, 16^2)",
+    "S": "[16^2, 32^2)",
+    "M": "[32^2, 96^2)",
+    "L": "[96^2, +inf)"
+  },
+  "metrics": {
+    "mPC15": "mean AP50:95 over 15 corruptions x 5 severity",
+    "rPC15": "mPC15 / clean AP50:95",
+    "mPC14_no_elastic": "same average excluding elastic_transform"
+  }
+}

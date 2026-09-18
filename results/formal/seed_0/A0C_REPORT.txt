@@ -1,0 +1,57 @@
+NEW PAPER V1.0 — A0-C HELMET-C ROBUSTNESS BASELINE
+==================================================================================
+STATUS                     : PASS
+completed                  : 2026-09-07T21:02:08+08:00
+conditions                 : 75
+best.pt SHA256             : 9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2
+
+ALL / all-macro:
+clean AP50:95              : 0.6069524313063762
+mPC15 AP50:95              : 0.25847428760438224
+rPC15                      : 0.4258559225935617
+absolute drop              : 0.348478143701994
+mPC14 no elastic           : 0.2495275033288777
+
+ES / all-macro:
+clean AP50:95              : 0.3141471092881632
+mPC15 AP50:95              : 0.05312355546602642
+rPC15                      : 0.16910407224946594
+absolute drop              : 0.26102355382213677
+
+ES / hat:
+clean AP50:95              : 0.22565674694100948
+mPC15 AP50:95              : 0.025791635848593546
+rPC15                      : 0.11429587724818137
+absolute drop              : 0.19986511109241595
+
+ES / person:
+clean AP50:95              : 0.40263747163531693
+mPC15 AP50:95              : 0.0804554750834593
+rPC15                      : 0.19982113129383713
+absolute drop              : 0.32218199655185764
+
+S / person:
+clean AP50:95              : 0.5338843203866451
+mPC15 AP50:95              : 0.1500033644331282
+rPC15                      : 0.2809660420903428
+absolute drop              : 0.3838809559535169
+
+Top-5 harmful corruptions for ES-person:
+1. impulse_noise: meanAP=0.013432, drop=0.389205, rPC=0.033360
+2. zoom_blur: meanAP=0.021429, drop=0.381209, rPC=0.053221
+3. gaussian_noise: meanAP=0.024979, drop=0.377658, rPC=0.062039
+4. shot_noise: meanAP=0.042021, drop=0.360616, rPC=0.104365
+5. snow: meanAP=0.045507, drop=0.357131, rPC=0.113022
+
+Top-5 harmful corruptions for ES-hat:
+1. zoom_blur: meanAP=0.001353, drop=0.224303, rPC=0.005997
+2. impulse_noise: meanAP=0.009285, drop=0.216372, rPC=0.041146
+3. glass_blur: meanAP=0.012017, drop=0.213640, rPC=0.053252
+4. motion_blur: meanAP=0.012715, drop=0.212942, rPC=0.056346
+5. shot_noise: meanAP=0.017121, drop=0.208536, rPC=0.075872
+
+Important:
+- rPC uses the A0-S clean result from the identical custom evaluator.
+- elastic_transform is included in formal mPC15 for standard benchmark compatibility.
+- mPC14_no_elastic is also reported as a geometry-label sensitivity check.
+- Prediction caches are preserved server-side for resume/re-audit.
