@@ -1,0 +1,67 @@
+# Helmet-C benchmark configuration
+# Robustness evaluation for safety-helmet detection
+# Source dataset: SHWD
+
+benchmark:
+  name: Helmet-C
+  source_dataset: SHWD
+
+corruptions:
+  - gaussian_noise
+  - shot_noise
+  - impulse_noise
+  - defocus_blur
+  - glass_blur
+  - motion_blur
+  - zoom_blur
+  - snow
+  - frost
+  - fog
+  - brightness
+  - contrast
+  - elastic_transform
+  - pixelate
+  - jpeg_compression
+
+severity_levels:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+split:
+  train_images: 5457
+  val_images: 607
+  test_images: 1517
+
+  train_objects: 86197
+  val_objects: 9925
+  test_objects: 24436
+
+  test_policy: closed_during_development
+
+random_seeds:
+  - 0
+  - 42
+  - 3407
+
+evaluation:
+  primary_metric: AP50_95
+  robustness_metrics:
+    - mPC
+    - rPC
+
+  scale_groups:
+    - ES
+    - S
+    - M
+    - L
+
+  special_subsets:
+    - ES_person
+
+reproducibility:
+  fixed_split: true
+  deterministic_corruptions: true
+  source_images_redistributed: false
