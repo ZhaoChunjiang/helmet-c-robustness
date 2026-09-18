@@ -1,0 +1,62 @@
+name: Reproducibility Check
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/summarize_three_seed.py"
+      - "scripts/verify_table2.py"
+      - "results/three_seed/**"
+      - ".github/workflows/reproducibility.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "scripts/summarize_three_seed.py"
+      - "scripts/verify_table2.py"
+      - "results/three_seed/**"
+      - ".github/workflows/reproducibility.yml"
+
+  workflow_dispatch:
+
+jobs:
+  verify-table2:
+    name: Verify Table 2
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Show Python version
+        run: python --version
+
+      - name: Recompute three-seed summary
+        run: python scripts/summarize_three_seed.py
+
+      - name: Verify manuscript Table 2
+        run: python scripts/verify_table2.py
+
+      - name: Show generated summary
+        run: |
+          echo "=== three_seed_raw.csv ==="
+          cat results/three_seed/three_seed_raw.csv
+          echo
+          echo "=== three_seed_summary.csv ==="
+          cat results/three_seed/three_seed_summary.csv
+
+      - name: Upload reproduced summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: three-seed-reproduced-summary
+          path: |
+            results/three_seed/three_seed_raw.csv
+            results/three_seed/three_seed_summary.csv
+          if-no-files-found: error
