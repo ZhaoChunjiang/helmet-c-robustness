@@ -129,6 +129,9 @@ Create a clean Python environment and install the dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+`requirements.txt` is a convenience installation manifest rather than a
+complete historical lockfile. The exact frozen core environment used for
+the formal experiments is documented in `environment/FORMAL_ENVIRONMENT.md`.
 
 For strict reproduction of the formal CUDA environment, install the PyTorch 2.1.2 CUDA 11.8 build appropriate for your platform before running the formal experiment.
 
