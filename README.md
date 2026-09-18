@@ -36,8 +36,17 @@ All object areas are defined after resizing to the formal 640 × 640 evaluation 
 
 ```text
 helmet-c-robustness/
+├── .github/
+│   └── workflows/
+│       └── reproducibility.yml
+├── .gitignore
+├── CITATION.cff
+├── LICENSE
 ├── README.md
 ├── requirements.txt
+├── assignments/
+│   ├── README.md
+│   └── A1_CORRUPTION_ASSIGNMENT_FROZEN.csv
 ├── configs/
 │   └── helmet_c.yaml
 ├── environment/
@@ -47,12 +56,33 @@ helmet-c-robustness/
 │   ├── generate_helmet_c.py
 │   ├── run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py
 │   ├── summarize_robustness.py
+│   ├── summarize_three_seed.py
 │   ├── validate_helmet_c.py
-│   └── validate_split_manifest.py
+│   ├── validate_split_manifest.py
+│   └── verify_table2.py
 ├── seeds/
 │   └── seeds.txt
 ├── splits/
+│   ├── split_summary.txt
+│   ├── train.txt
+│   ├── val.txt
+│   └── test.txt
 └── results/
+    ├── formal/
+    │   └── seed_0/
+    ├── three_seed/
+    │   ├── seed_0/
+    │   │   ├── A0_eval/
+    │   │   └── A1_eval/
+    │   ├── seed_42/
+    │   │   ├── A0_eval/
+    │   │   └── A1_eval/
+    │   └── seed_3407/
+    │       ├── A0_eval/
+    │       └── A1_eval/
+    └── final_validation/
+        ├── README.md
+        └── final_report/
 ```
 
 ## Formal Evaluation Runner
