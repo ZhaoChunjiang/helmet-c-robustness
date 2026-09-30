@@ -9,9 +9,9 @@ authors:
 repository-code: "https://github.com/ZhaoChunjiang/helmet-c-robustness"
 url: "https://github.com/ZhaoChunjiang/helmet-c-robustness"
 abstract: >-
-  Reproducible code, protocols, and experimental results for evaluating
-  small-object safety-helmet detection robustness under common image
-  corruptions using the Helmet-C benchmark.
+  Reproducibility code, deterministic V3.1 protocol notes, and final
+  manuscript-level results for evaluating small-object safety-helmet
+  detection robustness under synthetic common image corruptions.
 keywords:
   - safety helmet detection
   - object detection
@@ -20,12 +20,12 @@ keywords:
   - Helmet-C
   - YOLO
 license: "MIT"
-version: "1.0.0"
-date-released: "2026-09-18"
+version: "1.1.0"
+date-released: "2026-09-30"
 
 preferred-citation:
   type: article
-  title: "Robustness evaluation and mechanism analysis of small-object safety-helmet detection under common imaging corruptions"
+  title: "Robustness evaluation and mechanism analysis of small-object safety-helmet detection under synthetic common corruptions"
   authors:
     - family-names: "Zhao"
       given-names: "Chunjiang"

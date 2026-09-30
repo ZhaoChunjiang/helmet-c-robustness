@@ -1,606 +1,169 @@
 # Helmet-C Robustness
 
-[![Reproducibility Check](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/reproducibility.yml)
+[![V3.1 Final Table Verification](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/v31-final-verification.yml/badge.svg)](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/v31-final-verification.yml)
 
-Reproducible evaluation code for studying corruption robustness in safety-helmet object detection.
+Reproducibility materials for the manuscript:
 
-This repository contains the formal evaluation protocol, reproducibility utilities, and supporting scripts for the Helmet-C benchmark used in our experiments.
+**Robustness evaluation and mechanism analysis of small-object safety-helmet detection under synthetic common corruptions**
 
-## Overview
+## Final manuscript protocol (V3.6 / evaluator V3.1)
 
-Helmet-C evaluates object detectors under common image corruptions.
+The current headline results use the fixed **SHWD validation split (607 images, 9,925 objects)** and the deterministic Helmet-C-Val protocol.
 
-The formal benchmark contains:
+Helmet-C contains 15 synthetic corruption types at five severity levels (75 corruption/severity conditions): Gaussian, shot, and impulse noise; defocus, glass, motion, and zoom blur; snow, frost, and fog; brightness and contrast; elastic transform; pixelate; and JPEG compression.
 
-- 15 corruption types
-- 5 severity levels
-- 75 corruption/severity conditions
-- 1517 images in the independent SHWD test split
-
-The primary robustness metrics are:
-
-- AP50:95
-- mPC15: mean AP50:95 over all 75 corruption conditions
-- rPC15: mPC15 / clean AP50:95
-
-Scale-stratified evaluation is also performed for:
-
-- ES: area < 16²
-- S: 16² ≤ area < 32²
-- M: 32² ≤ area < 96²
-- L: area ≥ 96²
-
-All object areas are defined after resizing to the formal 640 × 640 evaluation resolution.
-
-## Repository Structure
+For corruption type `c` and severity `s`, the primary score is AP50:95. The main summary metrics are:
 
 ```text
-helmet-c-robustness/
-├── .github/
-│   └── workflows/
-│       └── reproducibility.yml
-├── .gitignore
-├── CITATION.cff
-├── LICENSE
-├── README.md
-├── requirements.txt
-├── assignments/
-│   ├── README.md
-│   └── A1_CORRUPTION_ASSIGNMENT_FROZEN.csv
-├── configs/
-│   └── helmet_c.yaml
-├── environment/
-│   └── FORMAL_ENVIRONMENT.md
-├── scripts/
-│   ├── export_split_manifest.py
-│   ├── generate_helmet_c.py
-│   ├── run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py
-│   ├── summarize_robustness.py
-│   ├── summarize_three_seed.py
-│   ├── validate_helmet_c.py
-│   ├── validate_split_manifest.py
-│   └── verify_table2.py
-├── seeds/
-│   └── seeds.txt
-├── splits/
-│   ├── split_summary.txt
-│   ├── train.txt
-│   ├── val.txt
-│   └── test.txt
-└── results/
-    ├── formal/
-    │   └── seed_0/
-    ├── three_seed/
-    │   ├── seed_0/
-    │   │   ├── A0_eval/
-    │   │   └── A1_eval/
-    │   ├── seed_42/
-    │   │   ├── A0_eval/
-    │   │   └── A1_eval/
-    │   └── seed_3407/
-    │       ├── A0_eval/
-    │       └── A1_eval/
-    └── final_validation/
-        ├── README.md
-        └── final_report/
+mPC15 = mean AP50:95 over all 15 × 5 = 75 conditions
+rPC15 = mPC15 / clean AP50:95
 ```
 
-## Formal Evaluation Runner
-
-The canonical formal evaluation program is:
+The V3.1 evaluator materializes each corrupted condition as **lossless PNG** and evaluates it through native Ultralytics `model.val()`. Corruption generation uses a stable per-image seed derived from:
 
 ```text
-scripts/run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py
+base corruption seed = 3407
+image identity + corruption type + severity
 ```
 
-Script version:
+with a SHA256-based mapping. `impulse_noise` uses an explicit RNG. Before a formal run is accepted, `impulse_noise s1` and `glass_blur s1` must pass a full **607-image × 2-pass** reproducibility audit.
+
+## Final 4-model × 3-seed results
+
+Training seeds are `0`, `42`, and `3407`. Values below are mean ± sample standard deviation across the three training seeds.
+
+| Metric | A0 | A1 (Corr-Aug) | A1-WH | A1-R10 |
+|---|---:|---:|---:|---:|
+| clean AP50:95 | 0.609093 ± 0.000260 | 0.609589 ± 0.000865 | 0.610760 ± 0.001022 | 0.607964 ± 0.001196 |
+| mPC15 | 0.385045 ± 0.001119 | 0.520876 ± 0.000561 | 0.518365 ± 0.000720 | **0.531700 ± 0.000762** |
+| rPC15 | 63.22% ± 0.16% | 85.45% ± 0.07% | 84.87% ± 0.26% | **87.46% ± 0.09%** |
+| weather-mPC | 0.452176 ± 0.006166 | 0.558918 ± 0.001035 | 0.532987 ± 0.001188 | **0.566016 ± 0.000378** |
+| weather-rPC | 74.24% ± 0.98% | 91.69% ± 0.07% | 87.27% ± 0.34% | **93.10% ± 0.22%** |
+| seen11-mPC | 0.352347 ± 0.000517 | 0.508199 ± 0.000465 | 0.511669 ± 0.000761 | **0.520941 ± 0.001126** |
+
+Machine-readable copies are under `results/V3.1_final_4x3/`.
+
+## Controls added for manuscript V3.6
+
+### A1-WH: held-out synthetic weather family
+
+A1-WH keeps the A1 architecture, optimizer, seeds, 1:1 clean/degraded ratio, epoch count, and total image-presentation budget, but excludes `snow`, `frost`, and `fog` from the degraded training pool.
+
+Its weather-mPC is:
 
 ```text
-1.0.4-A0C-PARALLEL-ATOMIC-REPRO
+A0      0.452176 ± 0.006166
+A1-WH   0.532987 ± 0.001188
 ```
 
-Earlier experimental versions are not the canonical reproduction entry point.
+This is evidence of **partial transfer to this deliberately held-out synthetic weather family**. It is not evidence of arbitrary unseen-domain or real-world OOD robustness.
 
-## Formal Environment
+### A1-R10: frozen multi-view pairing-diversity control
 
-The formal experiments were performed with:
+A1 uses one fixed degraded counterpart per clean source image. A1-R10 uses ten frozen pairing views while preserving the same total presentation budget and the same corruption/severity composition.
 
-- Ubuntu 22.04
-- Python 3.10
-- NVIDIA RTX 4090
-- PyTorch 2.1.2+cu118
-- Ultralytics 8.4.140
-- NumPy 1.26.4
-- imagecorruptions 1.1.2
-- input resolution: 640 × 640
+Paired A1-R10 − A1 differences across the three seeds are:
 
-See:
+| Metric | Paired difference |
+|---|---:|
+| clean AP50:95 | −0.162 ± 0.157 pp |
+| mPC15 | +1.082 ± 0.102 pp |
+| weather-mPC | +0.710 ± 0.129 pp |
+| seen11-mPC | +1.274 ± 0.134 pp |
 
-```text
-environment/FORMAL_ENVIRONMENT.md
-```
+A1-R10 is a **finite frozen 10-view control**, not fully online i.i.d. augmentation.
 
-for the complete environment record.
+## Fixed SHWD split
 
-## Installation
-
-Create a clean Python environment and install the dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-`requirements.txt` is a convenience installation manifest rather than a
-complete historical lockfile. The exact frozen core environment used for
-the formal experiments is documented in `environment/FORMAL_ENVIRONMENT.md`.
-
-For strict reproduction of the formal CUDA environment, install the PyTorch 2.1.2 CUDA 11.8 build appropriate for your platform before running the formal experiment.
-
-## Data Preparation
-
-The original SHWD images are not redistributed in this repository.
-
-Prepare the dataset in YOLO format and provide a dataset YAML file containing the fixed train, validation, and test split.
-
-The formal split contains:
-
-| Split | Images | hat | person | Total objects |
+| Split | Images | hat | person* | Total objects |
 |---|---:|---:|---:|---:|
 | Train | 5457 | 6419 | 79778 | 86197 |
 | Val | 607 | 747 | 9178 | 9925 |
 | Test | 1517 | 1878 | 22558 | 24436 |
 | Total | 7581 | 9044 | 111514 | 120558 |
 
-The test split must remain closed during development and should only be used for the final independent evaluation.
+`person` is the original SHWD class name for the non-helmeted-head negative class, not a full-body pedestrian class.
 
-## Fixed Split Manifests
+## Repository structure
 
-To export manifests from an already-existing fixed split:
+```text
+assignments/                 frozen training assignments retained for provenance
+configs/                     Helmet-C configuration
+splits/                      fixed SHWD split manifests
+scripts/v31/                 final deterministic V3.1 public reproduction utilities
+protocols/                   V3.1 protocol notes and supersession record
+results/V3.1_final_4x3/      final manuscript-level machine-readable results
+results/three_seed/          LEGACY pre-V3.1 outputs retained for provenance
+results/formal/              LEGACY pre-V3.1 independent-test artifacts
+results/final_validation/    LEGACY pre-V3.1 manuscript summary
+```
+
+## V3.1 public reproduction entry points
+
+The current public V3.1 utilities are:
+
+```text
+scripts/v31/deterministic_corruptions_v31.py
+scripts/v31/run_v31_determinism_audit.py
+scripts/v31/evaluate_helmet_c_val_v31.py
+scripts/v31/verify_v31_final_table.py
+```
+
+Run the static/final-table verification with:
 
 ```bash
-python scripts/export_split_manifest.py \
-    --train-dir /path/to/images/train \
-    --val-dir /path/to/images/val \
-    --test-dir /path/to/images/test \
-    --output-dir splits
+python scripts/v31/verify_v31_final_table.py
 ```
 
-This script does not create a new random split. It records the split already used in the experiment.
+For a fresh formal Helmet-C-Val rerun, first run the reproducibility audit and then evaluate the requested frozen checkpoint(s). The scripts accept explicit dataset/checkpoint/output paths; see `scripts/v31/README.md`.
 
-Validate the exported manifests with:
+## Formal environment
 
-```bash
-python scripts/validate_split_manifest.py \
-    --split-dir splits \
-    --train-root /path/to/images/train \
-    --val-root /path/to/images/val \
-    --test-root /path/to/images/test
-```
-
-Expected image counts are:
+The experiments were run with:
 
 ```text
-train = 5457
-val   = 607
-test  = 1517
+Ubuntu              22.04
+Python              3.10
+PyTorch             2.1.2+cu118
+Ultralytics         8.4.140
+NumPy               1.26.4
+imagecorruptions    1.1.2
+input resolution    640 × 640
+GPU                 NVIDIA RTX 4090
 ```
 
-## Formal Checkpoint
+The original SHWD images and trained checkpoints are not redistributed here.
 
-The formal A0 YOLO11n checkpoint is identified by the following SHA256 value:
+## Legacy results: important warning
 
-```text
-9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2
-```
+The folders `results/three_seed/`, `results/formal/`, and the older `results/final_validation/` were produced before the final V3.1 evaluator correction. They are retained **only for provenance**.
 
-The formal runner verifies the checkpoint hash before evaluation.
+> **SUPERSEDED FOR HEADLINE ROBUSTNESS METRICS.**
+> Do not use the old mPC/rPC, scale-stratified corrupted-AP, old independent-test corruption metrics, or the old pre-V3.1 Table 2 as the current manuscript result.
 
-The checkpoint itself is not included in this repository.
+The clean AP values remain useful provenance where explicitly referenced, but the manuscript V3.6 robustness claims are locked to `results/V3.1_final_4x3/`.
 
-## Self-Test
+## Interpretation boundary
 
-Before running the formal evaluation, test the custom evaluator with:
+Helmet-C is a synthetic single-corruption benchmark. A1-WH holds out one synthetic weather family. A1-R10 tests finite pairing diversity. These experiments do **not** establish robustness to arbitrary unseen corruptions, compound real-world degradations, or unconstrained distribution shift.
 
-```bash
-python scripts/run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py \
-    --self-test
-```
+## Data and code availability
 
-The self-test should finish successfully before the formal benchmark is executed.
-
-## Formal Helmet-C Evaluation
-
-Run the final Helmet-C evaluation using explicit paths:
-
-```bash
-python scripts/run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py \
-    --data /path/to/data.yaml \
-    --best /path/to/best.pt \
-    --a0s-metrics /path/to/A0S_metrics_by_size_class.csv \
-    --a0s-protocol /path/to/A0S_PROTOCOL_LOCK.json \
-    --results-root /path/to/results/A0C_helmet_c/seed_0 \
-    --zip-path /path/to/results/A0C_HELMET_C_RESULTS_TO_UPLOAD.zip
-```
-
-The frozen formal inference settings are:
-
-```text
-imgsz              = 640
-batch              = 8
-corruption workers = 12
-prefetch images    = 96
-corruption seed    = 3407
-confidence         = 0.001
-NMS IoU            = 0.7
-max detections     = 300
-```
-
-## Deterministic Corruptions
-
-The final formal runner generates corruptions deterministically.
-
-The random seed for each corrupted image is derived from:
-
-```text
-base seed + image identity + corruption type + severity
-```
-
-using a SHA256-based deterministic seed scheme.
-
-The frozen base corruption seed is:
-
-```text
-3407
-```
-
-This prevents corruption results from depending on filesystem traversal order or multiprocessing scheduling.
-
-## Corruption Types
-
-Helmet-C uses the following 15 corruption types:
-
-### Noise
-
-- gaussian_noise
-- shot_noise
-- impulse_noise
-
-### Blur
-
-- defocus_blur
-- glass_blur
-- motion_blur
-- zoom_blur
-
-### Weather / Imaging
-
-- snow
-- frost
-- fog
-- brightness
-
-### Digital
-
-- contrast
-- elastic_transform
-- pixelate
-- jpeg_compression
-
-Each corruption is evaluated at severity levels 1–5.
-
-## Metrics
-
-For corruption type \(c\) and severity \(s\), let the detection performance be:
-
-```text
-AP(c, s)
-```
-
-Then:
-
-```text
-mPC15 = mean AP50:95 over all 15 × 5 = 75 conditions
-```
-
-and:
-
-```text
-rPC15 = mPC15 / clean AP50:95
-```
-
-The formal runner additionally reports:
-
-- AP50
-- AP50:95
-- maximum recall at IoU = 0.50
-- recall at confidence = 0.25
-- per-corruption summaries
-- severity profiles
-- ES / S / M / L performance
-- class-specific hat / person results
-- mPC14 excluding elastic_transform as a geometry-label sensitivity analysis
-
-## Optional Materialized Helmet-C Generation
-
-The script:
-
-```text
-scripts/generate_helmet_c.py
-```
-
-can be used to explicitly generate and save corrupted images.
-
-This is provided as a convenience utility.
-
-The canonical formal evaluation does **not** require saving all corrupted images to disk. The final formal runner generates corrupted images deterministically during evaluation and caches prediction results instead.
-
-## Benchmark Integrity Check
-
-If Helmet-C has been materialized to disk, validate it using:
-
-```bash
-python scripts/validate_helmet_c.py \
-    --helmet-c-root /path/to/Helmet-C \
-    --expected-images 1517
-```
-
-A complete materialized benchmark contains:
-
-```text
-15 corruptions × 5 severities = 75 conditions
-1517 images per condition
-113775 corrupted images in total
-```
-
-## Result Summarization
-
-For externally generated condition-level AP results, robustness summaries can be calculated with:
-
-```bash
-python scripts/summarize_robustness.py \
-    --input-csv results/helmet_c_ap.csv \
-    --clean-ap CLEAN_AP_VALUE \
-    --output-dir results/summary
-```
-
-The input CSV must contain exactly one row for every corruption/severity pair.
-
-## Reproducibility Principles
-
-This repository follows the following rules:
-
-1. Fixed dataset splits are used for all experiments.
-2. The independent test set is not used for method development.
-3. The formal model checkpoint is identified using SHA256.
-4. Corruption generation is deterministic.
-5. Evaluation parameters are frozen.
-6. The formal runtime environment is documented.
-7. Partial or debugging runs are not reported as formal 75-condition results.
-
-## Data and Model Availability
-
-The original SHWD images are not redistributed in this repository.
-
-Model checkpoints and large prediction caches are also excluded from the
-GitHub repository. Their identities and experimental roles are recorded
-through protocol files, SHA256 hashes, and reproducibility metadata.
-
-The repository contains frozen evaluation outputs, protocol records,
-summary statistics, and scripts required to verify the primary three-seed
-YOLO11n robustness results. Machine-readable aggregate exports are also
-provided for the additional validation analyses reported in the manuscript.
-
-Some frozen protocol files preserve machine-local paths from the original
-experimental environment, for example:
-
-```text
-/root/autodl-tmp/...
-```
-
-These paths are retained only as provenance records of the original run.
-They are not required directory locations for reproduction. Users should
-provide their own paths through the command-line arguments documented in
-this README.
-
-## Paper
-
-This repository accompanies the manuscript:
-
-**Robustness evaluation and mechanism analysis of small-object safety-helmet detection under common imaging corruptions**
-
-The repository contains the frozen Helmet-C evaluation protocol,
-seed-level experimental outputs, reproducibility utilities, and formal
-independent-test artifacts associated with the manuscript.
-
-Publication metadata, journal information, and DOI will be added after
-formal publication.
-
-## Three-Seed Reproducibility
-
-The primary YOLO11n three-seed comparison uses the training seeds:
-
-```text
-0
-42
-3407
-```
-
-The six frozen A0/A1 Helmet-C-Val result sets are stored under:
-
-```text
-results/three_seed/
-```
-
-where:
-
-```text
-A0 = clean-training baseline
-A1 = corruption-aware training (Corr-Aug)
-```
-
-The script:
-
-```text
-scripts/summarize_three_seed.py
-```
-
-recomputes the seed-level values, three-seed means, sample standard
-deviations, and paired A1 - A0 differences directly from the frozen
-JSON result files.
-
-The script:
-
-```text
-scripts/verify_table2.py
-```
-
-verifies that the six frozen result files reproduce the values reported
-in Table 2 of the manuscript.
-
-To run the verification manually from the repository root:
-
-```bash
-python scripts/summarize_three_seed.py
-python scripts/verify_table2.py
-```
-
-A successful verification ends with:
-
-```text
-TABLE 2 VERIFICATION PASSED
-```
-
-## Automated Reproducibility Check
-
-GitHub Actions automatically performs the three-seed reproducibility
-verification whenever the relevant scripts, result files, or workflow
-configuration are changed.
-
-The workflow is defined in:
-
-```text
-.github/workflows/reproducibility.yml
-```
-
-A successful workflow run executes:
-
-```text
-Recompute three-seed summary
-Verify manuscript Table 2
-Upload reproduced summary
-```
-
-and generates the artifact:
-
-```text
-three-seed-reproduced-summary
-```
-
-containing:
-
-```text
-three_seed_raw.csv
-three_seed_summary.csv
-```
-
-The current workflow status is shown by the badge at the top of this README.
-
-## Formal Independent-Test Results
-
-The frozen seed-0 A0 independent Helmet-C-Test outputs generated with the
-final v1.0.4 formal runner are available under:
-
-```text
-results/formal/seed_0/
-```
-
-These files include the protocol lock, environment record, condition-level
-metrics, robustness summaries, and formal figures.
-
-The independent SHWD Test and Helmet-C-Test were evaluated only after the
-method and evaluation protocol had been frozen.
-
-## Validation Summary
-
-Manuscript-level aggregate validation results are summarized in:
-
-```text
-results/final_validation/README.md
-```
-
-This summary includes the three-seed YOLO11n results and additional
-validation evidence such as the YOLOv8n replication and independent-test
-analysis.
-
-The summary document does not replace the underlying seed-level
-experimental outputs.
+SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, checkpoints, or large temporary corruption images. It provides the fixed split manifests, protocol notes, deterministic corruption/evaluation utilities, and machine-readable final manuscript summaries.
 
 ## Citation
 
-If you use the code, Helmet-C protocol, evaluation procedure, or
-experimental results in this repository, please cite the associated work.
+Machine-readable citation metadata is provided in `CITATION.cff`.
 
-Machine-readable citation metadata is provided in:
-
-```text
-CITATION.cff
-```
-
-Until formal publication metadata is available, the manuscript may be
-cited as:
+Until publication metadata is available, cite the manuscript as:
 
 ```text
 Chunjiang Zhao, Tailong Xu, and Jizhou Wang.
 "Robustness evaluation and mechanism analysis of small-object
-safety-helmet detection under common imaging corruptions."
+safety-helmet detection under synthetic common corruptions."
 2026.
 ```
 
-The journal name, volume, issue, pages, and DOI will be added after
-formal publication.
-
 ## License
 
-This repository is released under the MIT License.
-
-See:
-
-```text
-LICENSE
-```
-
-for the complete license text.
-
-The MIT License applies to the original code and materials released in
-this repository. The original SHWD dataset and third-party software retain
-their respective licenses and are not relicensed by this repository.
-
-## Reproducibility Notes
-
-For strict reproduction, users should pay particular attention to the
-following frozen settings:
-
-```text
-Python             = 3.10
-PyTorch            = 2.1.2+cu118
-Ultralytics        = 8.4.140
-NumPy              = 1.26.4
-imagecorruptions   = 1.1.2
-input resolution   = 640 × 640
-corruption seed    = 3407
-confidence         = 0.001
-NMS IoU            = 0.7
-max detections     = 300
-```
-
-The formal A0 checkpoint is identified by:
-
-```text
-SHA256:
-9173932805b7589a337ed7838e1abf52ec949e893f11ac1a9d1bc22122b8b5d2
-```
-
-The original checkpoint file is not redistributed in this repository.
-
-All reported formal Helmet-C results should be interpreted together with
-the frozen protocol files, environment records, and deterministic
-corruption-generation procedure included in this repository.
+Original code and repository materials are released under the MIT License. SHWD and third-party packages retain their own licenses.

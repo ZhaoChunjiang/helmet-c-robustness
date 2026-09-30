@@ -1,0 +1,22 @@
+{
+  "status": "FINAL_MANUSCRIPT_LOCK",
+  "manuscript_version": "V3.6",
+  "evaluator_version": "V3.1 deterministic",
+  "protocol_id": "helmet-c-val-v3.1-deterministic-impulse-audited-glass-2026-09-29",
+  "split": "SHWD validation",
+  "images": 607,
+  "objects": 9925,
+  "training_seeds": [0, 42, 3407],
+  "corruption_seed": 3407,
+  "corruptions": 15,
+  "severities": 5,
+  "conditions": 75,
+  "materialization": "lossless PNG",
+  "evaluation_path": "native Ultralytics model.val()",
+  "determinism": {
+    "per_image_seed": "SHA256(base_seed|image_id|corruption|severity) -> uint32",
+    "impulse_noise": "explicit RNG",
+    "full_two_pass_audits": ["impulse_noise s1", "glass_blur s1"]
+  },
+  "interpretation_boundary": "synthetic single-corruption benchmark; A1-WH is one held-out synthetic weather family; A1-R10 is a finite frozen 10-view control"
+}

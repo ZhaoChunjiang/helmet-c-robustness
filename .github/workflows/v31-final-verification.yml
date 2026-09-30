@@ -1,0 +1,34 @@
+name: V3.1 Final Table Verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "results/V3.1_final_4x3/**"
+      - "scripts/v31/verify_v31_final_table.py"
+      - ".github/workflows/v31-final-verification.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "results/V3.1_final_4x3/**"
+      - "scripts/v31/verify_v31_final_table.py"
+      - ".github/workflows/v31-final-verification.yml"
+  workflow_dispatch:
+
+jobs:
+  verify-v31-final-lock:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.10"
+      - name: Verify V3.1 / manuscript V3.6 final table
+        run: python scripts/v31/verify_v31_final_table.py
+      - name: Show final lock files
+        run: |
+          cat results/V3.1_final_4x3/model_stats.csv
+          echo
+          cat results/V3.1_final_4x3/paired_deltas.csv

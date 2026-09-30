@@ -1,0 +1,5 @@
+comparison,metric,mean_delta_pp,sample_sd_pp
+A1-R10_minus_A1,clean_AP50_95,-0.162,0.157
+A1-R10_minus_A1,mPC15,1.082,0.102
+A1-R10_minus_A1,weather_mPC,0.710,0.129
+A1-R10_minus_A1,seen11_mPC,1.274,0.134
