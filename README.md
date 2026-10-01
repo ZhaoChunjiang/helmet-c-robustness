@@ -172,7 +172,9 @@ Helmet-C is a synthetic single-corruption benchmark. A1-WH holds out one synthet
 
 SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, trained checkpoints, or large temporary corruption images. It provides the fixed split manifests, final V3.1 evaluation protocol and utilities, protocol notes, and machine-readable manuscript result locks.
 
-Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed.
+Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed. Exact scikit-image, Pillow, and torchvision versions were also not captured in the original V3.1 run artifact, so a newly built environment can be audited for determinism but cannot be claimed to reproduce every original corruption image byte-for-byte from the public files alone.
+
+Complete frozen assignment manifests for A1-WH and all ten A1-R10 views are not included. Their intervention rules are documented in the manuscript and `assignments/README.md`; the repository therefore exposes the evaluation protocol and result lock, not a complete training-side reconstruction of these controls.
 
 Because the training-time `best.pt` checkpoints are selected using the validation split, the 607-image Helmet-C-Val benchmark is **not an untouched blind test set**. The final paper therefore reports it explicitly as the fixed validation benchmark and does not present V3.1 robustness numbers as independent-test results.
 
