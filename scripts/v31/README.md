@@ -39,7 +39,7 @@ python scripts/v31/evaluate_helmet_c_val_v31.py \
 
 Repeat `--model LABEL BEST_PT EXPECTED_CLEAN_AP5095` for multiple frozen checkpoints. Each corruption condition is materialized once as lossless PNG and all requested models are evaluated with native Ultralytics `model.val()`.
 
-The public V3.1 rerun path explicitly fixes `imgsz=640`, `batch=16`, `workers=8`, `rect=False`, `device=0`, `conf=0.001`, `iou=0.7`, and `max_det=300`. The fixed SHWD Val manifest contains 607 unique filename stems; the evaluator now rejects duplicate stems because V3.1 uses the stem as its image identity.
+The public V3.1 rerun path explicitly fixes `imgsz=640`, `batch=16`, `workers=8`, `rect=False`, `half=False`, `conf=0.001`, `iou=0.7`, and `max_det=300`. The manuscript runs used CUDA device 0; the public evaluator exposes `--device` with default `0` so the same setting is preserved by default while remaining portable. The fixed SHWD Val manifest contains 607 unique filename stems; the evaluator now rejects duplicate stems because V3.1 uses the stem as its image identity.
 
 ## 3. Fresh multi-seed aggregation
 
