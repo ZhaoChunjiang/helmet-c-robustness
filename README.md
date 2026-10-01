@@ -114,6 +114,7 @@ The current public V3.1 utilities are:
 scripts/v31/deterministic_corruptions_v31.py
 scripts/v31/run_v31_determinism_audit.py
 scripts/v31/evaluate_helmet_c_val_v31.py
+scripts/v31/aggregate_v31_three_seed.py
 scripts/v31/verify_v31_final_table.py
 ```
 
