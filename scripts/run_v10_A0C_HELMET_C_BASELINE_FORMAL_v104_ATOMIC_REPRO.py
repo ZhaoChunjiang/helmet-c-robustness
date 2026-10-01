@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# LEGACY PRE-V3.1 RUNNER — PROVENANCE ONLY.
+# This script contains the superseded evaluation path documented in
+# protocols/V31_PROTOCOL_NOTE.md. It must not be used to regenerate
+# manuscript V3.6 headline robustness metrics. Use scripts/v31/ instead.
+
 # -*- coding: utf-8 -*-
 """
 run_v10_A0C_HELMET_C_BASELINE_FORMAL.py
