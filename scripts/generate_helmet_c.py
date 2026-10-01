@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# LEGACY PRE-V3.1 GENERATOR — PROVENANCE ONLY.
+# Do not use this script to regenerate manuscript V3.6 headline conditions.
+# Its seed convention belongs to the superseded development chain.
+# Use scripts/v31/ for the current V3.1 public evaluation/corruption path.
+
 """
 Generate the Helmet-C corruption benchmark.
 
