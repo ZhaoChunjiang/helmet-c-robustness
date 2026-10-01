@@ -1,4 +1,11 @@
-# Formal Experiment Environment
+# Legacy pre-V3.1 Formal Experiment Environment — Provenance Only
+
+> **SUPERSEDED FOR MANUSCRIPT V3.6 HEADLINE ROBUSTNESS RESULTS.**
+>
+> This file documents the older pre-V3.1 experimental chain, including the v1.0.4 runner and its historical batch setting. It is retained only for provenance.
+> The current manuscript V3.6 evaluation contract is **V3.1** and is documented in `environment/V31_ENVIRONMENT_LOCK.md` and `scripts/v31/`.
+> Do not use the runner or settings below to regenerate V3.6 headline corruption metrics.
+
 
 This document records the software, hardware, and frozen evaluation
 settings used for the formal Helmet-C experiments.
@@ -27,9 +34,9 @@ through the runtime query used by the experiment script. The formal
 dependency configuration and A1 protocol record identify the package
 version as 1.1.2.
 
-## Formal Helmet-C Runner
+## Legacy pre-V3.1 Helmet-C Runner
 
-The final reproducible A0 independent-test evaluation program is:
+The historical pre-V3.1 A0 independent-test evaluation program was:
 
 ```text
 scripts/run_v10_A0C_HELMET_C_BASELINE_FORMAL_v104_ATOMIC_REPRO.py
@@ -41,8 +48,7 @@ Formal script version:
 1.0.4-A0C-PARALLEL-ATOMIC-REPRO
 ```
 
-Earlier development versions are not the canonical formal reproduction
-entry point.
+Within that older chain, earlier development versions were not the canonical entry point. For manuscript V3.6, however, the entire chain documented in this file is superseded by V3.1.
 
 ## Formal A0 Checkpoint
 
@@ -77,9 +83,9 @@ SHA256:
 08ec5fa03dbc81775183fea4fe9dde94e5f8bc42feded9598c8e65831466c46f
 ```
 
-## Frozen Inference Settings
+## Historical Frozen Inference Settings
 
-The final formal Helmet-C evaluation uses:
+The older pre-V3.1 evaluation used:
 
 ```text
 imgsz              = 640

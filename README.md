@@ -2,9 +2,17 @@
 
 [![V3.1 Final Table Verification](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/v31-final-verification.yml/badge.svg)](https://github.com/ZhaoChunjiang/helmet-c-robustness/actions/workflows/v31-final-verification.yml)
 
-Reproducibility materials for the manuscript:
+Public evaluation-protocol and result-lock materials for the manuscript:
 
 **Robustness evaluation and mechanism analysis of small-object safety-helmet detection under synthetic common corruptions**
+
+## Scope of this repository
+
+This repository is **not an end-to-end training reproduction package**. It does not redistribute the SHWD source images or trained checkpoints, and it does not contain the full training code used to produce A0, A1, A1-WH, and A1-R10.
+
+What it does provide is the final **V3.1 evaluation protocol**, fixed split manifests, deterministic corruption/evaluation utilities, protocol notes, and machine-readable V3.6 manuscript result locks. For the V3.6 manuscript, the **only current public evaluation entry point is `scripts/v31/`**. Older generators, runners, and result folders are retained only as provenance and must not be used to reproduce current headline robustness numbers.
+
+A static lock-table check verifies committed result files only; it does **not** rerun models or constitute end-to-end experimental reproduction.
 
 ## Final manuscript protocol (V3.6 / evaluator V3.1)
 
@@ -98,7 +106,7 @@ results/formal/              LEGACY pre-V3.1 independent-test artifacts
 results/final_validation/    LEGACY pre-V3.1 manuscript summary
 ```
 
-## V3.1 public reproduction entry points
+## V3.1 public evaluation entry points
 
 The current public V3.1 utilities are:
 
@@ -106,20 +114,25 @@ The current public V3.1 utilities are:
 scripts/v31/deterministic_corruptions_v31.py
 scripts/v31/run_v31_determinism_audit.py
 scripts/v31/evaluate_helmet_c_val_v31.py
+scripts/v31/aggregate_v31_three_seed.py
 scripts/v31/verify_v31_final_table.py
 ```
 
-Run the static/final-table verification with:
+Run the static/final-table integrity verification with:
 
 ```bash
 python scripts/v31/verify_v31_final_table.py
 ```
 
-For a fresh formal Helmet-C-Val rerun, first run the reproducibility audit and then evaluate the requested frozen checkpoint(s). The scripts accept explicit dataset/checkpoint/output paths; see `scripts/v31/README.md`.
+For a fresh Helmet-C-Val rerun, first run the determinism audit and then evaluate user-supplied frozen checkpoint(s). The original SHWD images and trained checkpoints are not bundled here. See `scripts/v31/README.md`.
 
-## Formal environment
+`verify_v31_final_table.py` checks that the committed machine-readable result lock has not drifted; it does not load images, checkpoints, or recompute AP.
 
-The experiments were run with:
+## V3.1 environment record
+
+The current V3.1 environment/protocol record is documented in `environment/V31_ENVIRONMENT_LOCK.md`. The older `environment/FORMAL_ENVIRONMENT.md` is a **pre-V3.1 provenance record** and is not the V3.6 evaluation entry point.
+
+The captured core environment was:
 
 ```text
 Ubuntu              22.04
@@ -132,14 +145,22 @@ input resolution    640 × 640
 GPU                 NVIDIA RTX 4090
 ```
 
-The original SHWD images and trained checkpoints are not redistributed here.
+The original SHWD images and trained checkpoints are not redistributed here. Exact versions of some transitive image-stack dependencies (notably scikit-image, Pillow, and torchvision) were not captured in the original V3.1 run artifact; the repository records this limitation rather than inventing versions.
 
-## Legacy results: important warning
+The public V3.1 evaluator explicitly freezes the manuscript-critical validation settings used by the portable rerun path. See `environment/V31_ENVIRONMENT_LOCK.md` for the distinction between recorded original-run facts and the current public rerun contract.
+
+## Metric naming note
+
+The 11-family non-weather summary is the mean over the 15 Helmet-C families after excluding `snow`, `frost`, `fog`, and `elastic_transform`. In the manuscript-facing terminology this is **nonweather11-mPC**. Some already-committed machine-readable lock files retain the legacy key `seen11_mPC` for backward compatibility; that legacy key must not be interpreted as a universal "training-seen" set for every model.
+
+## Legacy results and scripts: important warning
 
 The folders `results/three_seed/`, `results/formal/`, and the older `results/final_validation/` were produced before the final V3.1 evaluator correction. They are retained **only for provenance**.
 
 > **SUPERSEDED FOR HEADLINE ROBUSTNESS METRICS.**
 > Do not use the old mPC/rPC, scale-stratified corrupted-AP, old independent-test corruption metrics, or the old pre-V3.1 Table 2 as the current manuscript result.
+
+The legacy `scripts/generate_helmet_c.py` seed convention and the pre-V3.1 v1.0.4 runner belong to the superseded development chain. They are retained for provenance only. They are **not** interchangeable with `scripts/v31/` and must not be used to regenerate V3.6 headline conditions.
 
 The clean AP values remain useful provenance where explicitly referenced, but the manuscript V3.6 robustness claims are locked to `results/V3.1_final_4x3/`.
 
@@ -149,7 +170,11 @@ Helmet-C is a synthetic single-corruption benchmark. A1-WH holds out one synthet
 
 ## Data and code availability
 
-SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, checkpoints, or large temporary corruption images. It provides the fixed split manifests, protocol notes, deterministic corruption/evaluation utilities, and machine-readable final manuscript summaries.
+SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, trained checkpoints, or large temporary corruption images. It provides the fixed split manifests, final V3.1 evaluation protocol and utilities, protocol notes, and machine-readable manuscript result locks.
+
+Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed.
+
+Because the training-time `best.pt` checkpoints are selected using the validation split, the 607-image Helmet-C-Val benchmark is **not an untouched blind test set**. The final paper therefore reports it explicitly as the fixed validation benchmark and does not present V3.1 robustness numbers as independent-test results.
 
 ## Citation
 

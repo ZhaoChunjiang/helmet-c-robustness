@@ -38,3 +38,12 @@ results/V3.1_final_4x3/
 ## Legacy boundary
 
 Pre-V3.1 corrupted-image metrics are retained for provenance only. In particular, old mPC/rPC, old scale-stratified corrupted metrics, old YOLOv8n corruption mPC/rPC, and old independent Helmet-C-Test corruption numbers are not used as V3.6 headline evidence.
+
+
+## Public reproducibility scope
+
+The public repository provides the V3.1 evaluation protocol, split manifests, corruption/evaluation utilities, and machine-readable result locks. It is not an end-to-end training reproduction package: SHWD images, trained checkpoints, and the full training implementation are not redistributed.
+
+The 607-image Helmet-C-Val split is the same validation split used during training-time model selection for the frozen `best.pt` checkpoints. It is therefore not an untouched blind test set. V3.6 reports this split explicitly as validation and does not use older pre-V3.1 Helmet-C-Test corruption metrics as headline evidence.
+
+The preferred name for the 11-family non-weather summary is `nonweather11-mPC`. Existing result locks may retain the legacy key `seen11_mPC` for backward compatibility; the underlying set excludes snow, frost, fog, and elastic transform.

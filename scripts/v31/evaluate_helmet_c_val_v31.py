@@ -26,7 +26,9 @@ CORRUPTIONS = (
     "brightness", "contrast", "elastic_transform", "pixelate", "jpeg_compression",
 )
 WEATHER = {"snow", "frost", "fog"}
-SEEN11 = tuple(c for c in CORRUPTIONS if c not in WEATHER and c != "elastic_transform")
+NONWEATHER11 = tuple(c for c in CORRUPTIONS if c not in WEATHER and c != "elastic_transform")
+# Backward-compatible alias for older machine-readable locks.
+SEEN11 = NONWEATHER11
 SEVERITIES = (1, 2, 3, 4, 5)
 IMG_EXT = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tif", ".tiff"}
 
@@ -38,6 +40,13 @@ def canonical_paths(data_yaml: Path):
     ims = sorted(p for p in imdir.iterdir() if p.is_file() and p.suffix.lower() in IMG_EXT)
     if len(ims) != 607:
         raise RuntimeError(f"Expected 607 validation images, got {len(ims)}")
+    stems = [p.stem for p in ims]
+    if len(set(stems)) != len(stems):
+        dup = sorted({s for s in stems if stems.count(s) > 1})
+        raise RuntimeError(
+            "V3.1 image identity uses filename stems; duplicate stems are not allowed: "
+            + ", ".join(dup[:10])
+        )
     counts = {0: 0, 1: 0}
     for p in ims:
         lab = lbdir / f"{p.stem}.txt"
@@ -82,7 +91,8 @@ def metric_dict(metrics):
 def official_val(model: YOLO, data: Path, project: Path, name: str):
     m = model.val(
         data=str(data), split="val", imgsz=640, batch=16, workers=8,
-        conf=0.001, iou=0.7, max_det=300, plots=False, save=False,
+        rect=False, device="0", conf=0.001, iou=0.7, max_det=300,
+        plots=False, save=False,
         project=str(project), name=name, exist_ok=True, verbose=False,
     )
     return metric_dict(m)
@@ -91,7 +101,7 @@ def official_val(model: YOLO, data: Path, project: Path, name: str):
 def summary(clean: float, values: dict[tuple[str, int], float]):
     all_vals = [values[(c, s)] for c in CORRUPTIONS for s in SEVERITIES]
     weather = [values[(c, s)] for c in WEATHER for s in SEVERITIES]
-    seen = [values[(c, s)] for c in SEEN11 for s in SEVERITIES]
+    nonweather = [values[(c, s)] for c in NONWEATHER11 for s in SEVERITIES]
     mean = lambda xs: sum(xs) / len(xs)
     mpc = mean(all_vals)
     w = mean(weather)
@@ -101,7 +111,8 @@ def summary(clean: float, values: dict[tuple[str, int], float]):
         "rPC15": mpc / clean,
         "weather_mPC": w,
         "weather_rPC": w / clean,
-        "seen11_mPC": mean(seen),
+        "nonweather11_mPC": mean(nonweather),
+        "seen11_mPC": mean(nonweather),  # legacy alias retained for compatibility
         "per_corruption": {c: mean([values[(c, s)] for s in SEVERITIES]) for c in CORRUPTIONS},
     }
 
