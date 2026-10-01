@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic Helmet-C corruption worker used by public V3.1 reproduction.
+"""Deterministic Helmet-C corruption worker used by the public V3.1 evaluation path.
 
 This clean public version mirrors the final V3.1 rules:
 - stable per-image uint32 seed from SHA256(base|image_id|corruption|severity)
