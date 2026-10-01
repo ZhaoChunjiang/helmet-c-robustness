@@ -1,6 +1,11 @@
-# Convenience installation manifest.
-# Exact frozen core versions are documented in:
-# environment/FORMAL_ENVIRONMENT.md
+# Convenience installation manifest for the public V3.1 evaluation utilities.
+# This is NOT claimed to be a byte-for-byte reconstruction of the original
+# environment. Exact captured core versions are documented in:
+# environment/V31_ENVIRONMENT_LOCK.md
+#
+# The original V3.1 run artifacts did not preserve exact versions of every
+# transitive imaging dependency (notably scikit-image, Pillow, torchvision).
+# Those versions are intentionally not invented here.
 
 # Core scientific stack
 numpy==1.26.4
