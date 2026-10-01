@@ -20,6 +20,7 @@ CORRUPTIONS = (
     "glass_blur", "motion_blur", "zoom_blur", "snow", "frost", "fog",
     "brightness", "contrast", "elastic_transform", "pixelate", "jpeg_compression",
 )
+SEVERITIES = (1, 2, 3, 4, 5)
 IMG_EXT = {".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tif", ".tiff"}
 
 
@@ -35,6 +36,9 @@ def val_images(data_yaml: Path) -> list[Path]:
     ims = sorted(p for p in imdir.iterdir() if p.is_file() and p.suffix.lower() in IMG_EXT)
     if len(ims) != 607:
         raise RuntimeError(f"Expected 607 validation images, got {len(ims)}")
+    stems = [p.stem for p in ims]
+    if len(set(stems)) != len(stems):
+        raise RuntimeError("Duplicate validation filename stems are not allowed by V3.1")
     return ims
 
 
@@ -85,6 +89,11 @@ def main():
     ap.add_argument("--data", type=Path, required=True, help="SHWD data.yaml with images/val and labels/val")
     ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--output", type=Path, default=Path("V31_DETERMINISM_AUDIT.json"))
+    ap.add_argument(
+        "--full-all",
+        action="store_true",
+        help="Additionally run a complete 607-image two-pass audit for all 75 conditions",
+    )
     args = ap.parse_args()
 
     ims = val_images(args.data)
@@ -92,12 +101,28 @@ def main():
     impulse = full_condition(ims, "impulse_noise", 1, args.workers)
     glass = full_condition(ims, "glass_blur", 1, args.workers)
 
+    full_all = []
+    if args.full_all:
+        cached = {
+            ("impulse_noise", 1): impulse,
+            ("glass_blur", 1): glass,
+        }
+        for corr in CORRUPTIONS:
+            for sev in SEVERITIES:
+                row = cached.get((corr, sev))
+                if row is None:
+                    row = full_condition(ims, corr, sev, args.workers)
+                full_all.append(row)
+
     obj = {
         "status": "PASS",
         "protocol_id": PROTOCOL_ID,
         "quick_cross_process": quick,
         "full_impulse_s1": impulse,
         "full_glass_s1": glass,
+        "full_all_requested": bool(args.full_all),
+        "full_all_conditions": full_all,
+        "full_all_match": bool(full_all) and all(x.get("match") for x in full_all),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(obj, indent=2) + "\n", encoding="utf-8")
