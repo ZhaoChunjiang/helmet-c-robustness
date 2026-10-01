@@ -61,7 +61,8 @@ imgsz      = 640
 batch      = 16
 workers    = 8
 rect       = False
-device     = 0
+device     = 0 (manuscript run; public script exposes --device, default 0)
+half       = False
 conf       = 0.001
 NMS IoU    = 0.7
 max_det    = 300
@@ -127,3 +128,10 @@ elastic_transform
 ```
 
 The preferred manuscript-facing name is **nonweather11-mPC**. Existing machine-readable locks may retain the legacy key `seen11_mPC` for backward compatibility. The two names refer to the same numerical 11-family set; the legacy label must not be interpreted as a universal training-seen set across all models.
+
+
+## Remaining provenance limitations
+
+Two A1-R10 checkpoint SHA256 values (training seeds 42 and 3407) were not preserved in the synchronized export artifacts and remain unavailable in the public result lock. They are not guessed or reconstructed.
+
+The original run did not capture exact versions of all transitive imaging dependencies (notably scikit-image, Pillow, and torchvision). Consequently, a newly constructed environment can be audited for internal determinism, but the public files alone cannot establish byte-for-byte image identity with every original corruption realization.
