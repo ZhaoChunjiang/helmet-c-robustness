@@ -99,24 +99,34 @@ def _impulse_noise(rgb: np.ndarray, severity: int, seed: int) -> np.ndarray:
 
 
 def corrupt_rgb(rgb: np.ndarray, image_id: str, corruption: str, severity: int) -> np.ndarray:
-    """Generate one deterministic RGB uint8 corruption realization."""
+    """Generate one deterministic RGB uint8 corruption realization.
+
+    The function restores NumPy/Python global RNG state on exit so a corruption
+    call cannot perturb unrelated random operations in the same process.
+    """
     global _CORRUPT_FN
     severity = int(severity)
     seed = image_seed(image_id, corruption, severity)
 
-    np.random.seed(seed)
-    random.seed(seed)
+    np_state = np.random.get_state()
+    py_state = random.getstate()
+    try:
+        np.random.seed(seed)
+        random.seed(seed)
 
-    if corruption == "impulse_noise":
-        out = _impulse_noise(rgb, severity, seed)
-    else:
-        if _CORRUPT_FN is None:
-            _CORRUPT_FN = _install_imagecorruptions_compat()
-        out = _CORRUPT_FN(
-            np.asarray(rgb, dtype=np.uint8),
-            corruption_name=corruption,
-            severity=severity,
-        )
+        if corruption == "impulse_noise":
+            out = _impulse_noise(rgb, severity, seed)
+        else:
+            if _CORRUPT_FN is None:
+                _CORRUPT_FN = _install_imagecorruptions_compat()
+            out = _CORRUPT_FN(
+                np.asarray(rgb, dtype=np.uint8),
+                corruption_name=corruption,
+                severity=severity,
+            )
+    finally:
+        np.random.set_state(np_state)
+        random.setstate(py_state)
 
     out = np.asarray(out)
     if out.dtype != np.uint8:
