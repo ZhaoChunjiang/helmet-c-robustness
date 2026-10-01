@@ -88,10 +88,10 @@ def metric_dict(metrics):
     return {"precision": float(p), "recall": float(r), "AP50": float(ap50), "AP50_95": float(ap)}
 
 
-def official_val(model: YOLO, data: Path, project: Path, name: str):
+def official_val(model: YOLO, data: Path, project: Path, name: str, device: str):
     m = model.val(
         data=str(data), split="val", imgsz=640, batch=16, workers=8,
-        rect=False, device="0", conf=0.001, iou=0.7, max_det=300,
+        rect=False, device=device, half=False, conf=0.001, iou=0.7, max_det=300,
         plots=False, save=False,
         project=str(project), name=name, exist_ok=True, verbose=False,
     )
@@ -123,6 +123,7 @@ def main():
     ap.add_argument("--model", nargs=3, action="append", metavar=("LABEL", "BEST_PT", "EXPECTED_CLEAN_AP5095"), required=True)
     ap.add_argument("--audit-marker", type=Path, required=True)
     ap.add_argument("--output", type=Path, required=True)
+    ap.add_argument("--device", type=str, default="0", help="Ultralytics validation device; manuscript runs used CUDA device 0")
     ap.add_argument("--clean-tol", type=float, default=1e-4)
     args = ap.parse_args()
 
@@ -138,7 +139,7 @@ def main():
     models = []
     for label, best, expected in args.model:
         model = YOLO(best)
-        clean = official_val(model, args.data, args.output / "native_val", f"{label}_clean")
+        clean = official_val(model, args.data, args.output / "native_val", f"{label}_clean", args.device)
         diff = abs(clean["AP50_95"] - float(expected))
         if diff > args.clean_tol:
             raise RuntimeError(f"{label} clean AP mismatch {diff} > {args.clean_tol}")
@@ -153,7 +154,7 @@ def main():
                 cond = td / f"{corr}_s{sev}"
                 data = write_condition(ims, lbdir, cond, corr, sev)
                 for label, model, _ in models:
-                    m = official_val(model, data, args.output / "native_val", f"{label}_{corr}_s{sev}")
+                    m = official_val(model, data, args.output / "native_val", f"{label}_{corr}_s{sev}", args.device)
                     values[label][(corr, sev)] = m["AP50_95"]
                     rows.append({"model": label, "corruption": corr, "severity": sev, **m})
                 shutil.rmtree(cond)

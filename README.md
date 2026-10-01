@@ -47,7 +47,7 @@ Training seeds are `0`, `42`, and `3407`. Values below are mean ± sample standa
 | rPC15 | 63.22% ± 0.16% | 85.45% ± 0.07% | 84.87% ± 0.26% | **87.46% ± 0.09%** |
 | weather-mPC | 0.452176 ± 0.006166 | 0.558918 ± 0.001035 | 0.532987 ± 0.001188 | **0.566016 ± 0.000378** |
 | weather-rPC | 74.24% ± 0.98% | 91.69% ± 0.07% | 87.27% ± 0.34% | **93.10% ± 0.22%** |
-| seen11-mPC | 0.352347 ± 0.000517 | 0.508199 ± 0.000465 | 0.511669 ± 0.000761 | **0.520941 ± 0.001126** |
+| nonweather11-mPC | 0.352347 ± 0.000517 | 0.508199 ± 0.000465 | 0.511669 ± 0.000761 | **0.520941 ± 0.001126** |
 
 Machine-readable copies are under `results/V3.1_final_4x3/`.
 
@@ -77,7 +77,7 @@ Paired A1-R10 − A1 differences across the three seeds are:
 | clean AP50:95 | −0.162 ± 0.157 pp |
 | mPC15 | +1.082 ± 0.102 pp |
 | weather-mPC | +0.710 ± 0.129 pp |
-| seen11-mPC | +1.274 ± 0.134 pp |
+| nonweather11-mPC | +1.274 ± 0.134 pp |
 
 A1-R10 is a **finite frozen 10-view control**, not fully online i.i.d. augmentation.
 
@@ -151,7 +151,7 @@ The public V3.1 evaluator explicitly freezes the manuscript-critical validation 
 
 ## Metric naming note
 
-The 11-family non-weather summary is the mean over the 15 Helmet-C families after excluding `snow`, `frost`, `fog`, and `elastic_transform`. In the manuscript-facing terminology this is **nonweather11-mPC**. Some already-committed machine-readable lock files retain the legacy key `seen11_mPC` for backward compatibility; that legacy key must not be interpreted as a universal "training-seen" set for every model.
+The 11-family non-weather summary is the mean over the 15 Helmet-C families after excluding `snow`, `frost`, `fog`, and `elastic_transform`. In the manuscript-facing terminology this is **nonweather11-mPC**. Some already-committed machine-readable lock files retain the legacy key `seen11_mPC` for backward compatibility; `seen11_mPC` is a compatibility alias for `nonweather11_mPC` and must not be interpreted as a universal "training-seen" set for every model.
 
 ## Legacy results and scripts: important warning
 
@@ -172,7 +172,9 @@ Helmet-C is a synthetic single-corruption benchmark. A1-WH holds out one synthet
 
 SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, trained checkpoints, or large temporary corruption images. It provides the fixed split manifests, final V3.1 evaluation protocol and utilities, protocol notes, and machine-readable manuscript result locks.
 
-Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed.
+Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed. Exact scikit-image, Pillow, and torchvision versions were also not captured in the original V3.1 run artifact, so a newly built environment can be audited for determinism but cannot be claimed to reproduce every original corruption image byte-for-byte from the public files alone.
+
+Complete frozen assignment manifests for A1-WH and all ten A1-R10 views are not included. Their intervention rules are documented in the manuscript and `assignments/README.md`; the repository therefore exposes the evaluation protocol and result lock, not a complete training-side reconstruction of these controls.
 
 Because the training-time `best.pt` checkpoints are selected using the validation split, the 607-image Helmet-C-Val benchmark is **not an untouched blind test set**. The final paper therefore reports it explicitly as the fixed validation benchmark and does not present V3.1 robustness numbers as independent-test results.
 
