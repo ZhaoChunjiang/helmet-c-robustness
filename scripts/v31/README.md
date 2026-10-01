@@ -41,7 +41,21 @@ Repeat `--model LABEL BEST_PT EXPECTED_CLEAN_AP5095` for multiple frozen checkpo
 
 The public V3.1 rerun path explicitly fixes `imgsz=640`, `batch=16`, `workers=8`, `rect=False`, `device=0`, `conf=0.001`, `iou=0.7`, and `max_det=300`. The fixed SHWD Val manifest contains 607 unique filename stems; the evaluator now rejects duplicate stems because V3.1 uses the stem as its image identity.
 
-## 3. Repository final-lock verification
+## 3. Fresh multi-seed aggregation
+
+After rerunning frozen checkpoints for multiple training seeds, aggregate the resulting `summary.json` files with:
+
+```bash
+python scripts/v31/aggregate_v31_three_seed.py \
+  --record A0 0 A0_seed0 /runs/a0_s0/summary.json \
+  --record A0 42 A0_seed42 /runs/a0_s42/summary.json \
+  --record A0 3407 A0_seed3407 /runs/a0_s3407/summary.json \
+  --output /runs/A0_aggregate
+```
+
+The utility computes mean and **sample** standard deviation from the fresh evaluator outputs and emits rPC both as a ratio and as a percentage display value.
+
+## 4. Repository final-lock verification
 
 ```bash
 python scripts/v31/verify_v31_final_table.py
