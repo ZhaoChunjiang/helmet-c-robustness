@@ -1,0 +1,4 @@
+probe,clean_delta_vs_A3_pp,Blur6_delta_vs_A3_pp,Noise2_delta_vs_A3_pp,Screen8_delta_vs_A3_pp
+A3_beta1,-0.0261,0.0394,0.1666,0.0712
+A4_scale,-0.0602,-0.0510,-0.0460,-0.0498
+A5_visibility,0.0206,-0.0419,0.0575,-0.0171
