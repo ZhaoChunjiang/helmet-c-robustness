@@ -1,6 +1,6 @@
 # Public V3.1 reproduction utilities
 
-These scripts implement the final manuscript V3.6 Helmet-C-Val **evaluation** boundary.
+These scripts implement the final manuscript V3.7 Helmet-C-Val **evaluation** boundary.
 
 They are not a full training reproduction package: SHWD source images and trained checkpoints are not bundled here, and the full training code for A0/A1/A1-WH/A1-R10 is not part of this public repository.
 
@@ -39,7 +39,7 @@ python scripts/v31/evaluate_helmet_c_val_v31.py \
 
 Repeat `--model LABEL BEST_PT EXPECTED_CLEAN_AP5095` for multiple frozen checkpoints. Each corruption condition is materialized once as lossless PNG and all requested models are evaluated with native Ultralytics `model.val()`.
 
-The public V3.1 rerun path explicitly fixes `imgsz=640`, `batch=16`, `workers=8`, `rect=False`, `half=False`, `conf=0.001`, `iou=0.7`, and `max_det=300`. The manuscript runs used CUDA device 0; the public evaluator exposes `--device` with default `0` so the same setting is preserved by default while remaining portable. The fixed SHWD Val manifest contains 607 unique filename stems; the evaluator now rejects duplicate stems because V3.1 uses the stem as its image identity.
+The public V3.1 rerun path fixes `imgsz=640`, `batch=16`, `workers=8`, `conf=0.001`, `iou=0.7`, and `max_det=300`. To reproduce the historical V3.1 numerical path, `rect` and `half` are intentionally left unspecified, exactly as in the formal AutoDL runner. A V3.7 protocol-reconciliation check reproduced the frozen A0 seed-0 clean AP50:95 exactly at `0.6089874629020515` with that call; forcing `rect=False` changed the clean metric and is therefore not the V3.1 numerical contract. The manuscript runs used CUDA device 0; the public evaluator exposes `--device` with default `0`. The fixed SHWD Val manifest contains 607 unique filename stems; the evaluator rejects duplicate stems because V3.1 uses the stem as its image identity.
 
 ## 3. Fresh multi-seed aggregation
 
@@ -61,7 +61,7 @@ The utility computes mean and **sample** standard deviation from the fresh evalu
 python scripts/v31/verify_v31_final_table.py
 ```
 
-This verifies the exact V3.1/V3.6 machine-readable aggregate values committed under `results/V3.1_final_4x3/`. It is an **integrity check of committed result files**, not a model rerun and not evidence of end-to-end reproduction.
+This verifies the exact V3.1/V3.7 machine-readable aggregate values committed under `results/V3.1_final_4x3/`. It is an **integrity check of committed result files**, not a model rerun and not evidence of end-to-end reproduction.
 
 ## Notes
 
@@ -75,4 +75,4 @@ The 11-family non-weather average excludes `snow`, `frost`, `fog`, and `elastic_
 
 ## Environment capture limitation
 
-The original V3.1 run artifacts recorded the core stack (Python, NumPy, PyTorch/CUDA, Ultralytics, imagecorruptions, GPU/driver) but did not preserve exact versions of every transitive imaging dependency such as scikit-image, Pillow, and torchvision. Those versions are therefore not guessed in this repository. See `../../environment/V31_ENVIRONMENT_LOCK.md`.
+The original V3.1 run artifacts recorded the core stack (Python, NumPy, PyTorch/CUDA, Ultralytics, imagecorruptions, GPU/driver) but did not preserve timestamped exact versions of every transitive imaging dependency. A later inventory of the original AutoDL workspace recovered scikit-image `0.25.2`, Pillow `10.3.0`, and torchvision `0.16.2+cu118`; these are documented only as a recovered workspace snapshot, not retroactively promoted to the original run lock. See `../../environment/V31_ENVIRONMENT_LOCK.md`.
