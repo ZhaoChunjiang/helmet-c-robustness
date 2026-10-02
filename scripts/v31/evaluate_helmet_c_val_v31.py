@@ -89,9 +89,13 @@ def metric_dict(metrics):
 
 
 def official_val(model: YOLO, data: Path, project: Path, name: str, device: str):
+    # Historical V3.1 numerical contract: rect/half were intentionally omitted
+    # in the formal AutoDL runner. A V3.7 protocol-reconciliation check showed
+    # that this exact call reproduces the frozen A0 seed-0 clean AP50:95
+    # (0.6089874629020515), whereas forcing rect=False changes the result.
     m = model.val(
         data=str(data), split="val", imgsz=640, batch=16, workers=8,
-        rect=False, device=device, half=False, conf=0.001, iou=0.7, max_det=300,
+        device=device, conf=0.001, iou=0.7, max_det=300,
         plots=False, save=False,
         project=str(project), name=name, exist_ok=True, verbose=False,
     )
