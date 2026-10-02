@@ -104,11 +104,11 @@ This optional mode performs two full passes over all 75 corruption/severity cond
 
 ## Validation-set status
 
-The V3.6 headline robustness numbers are reported on the fixed 607-image SHWD validation split.
+The V3.7 headline robustness numbers are reported on the fixed 607-image SHWD validation split.
 
-The training pipeline uses Ultralytics training and the frozen `best.pt` checkpoints. The validation split is therefore part of the training-time model-selection process and is **not an untouched blind test set**. V3.6 deliberately labels the benchmark as Helmet-C-Val and does not present the V3.1 corruption numbers as independent-test results.
+The training pipeline uses Ultralytics training and the frozen `best.pt` checkpoints. The validation split is therefore part of the training-time model-selection process and is **not an untouched blind test set**. V3.7 deliberately labels the benchmark as Helmet-C-Val and does not present the V3.1 corruption numbers as independent-test results.
 
-The 1,517-image Test split and older pre-V3.1 Helmet-C-Test outputs are not used as V3.6 headline corruption evidence.
+The 1,517-image Test split and older pre-V3.1 Helmet-C-Test outputs are not used as V3.7 headline corruption evidence.
 
 ## Result-lock boundary
 
