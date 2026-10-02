@@ -47,3 +47,10 @@ The public repository provides the V3.1 evaluation protocol, split manifests, co
 The 607-image Helmet-C-Val split is the same validation split used during training-time model selection for the frozen `best.pt` checkpoints. It is therefore not an untouched blind test set. V3.6 reports this split explicitly as validation and does not use older pre-V3.1 Helmet-C-Test corruption metrics as headline evidence.
 
 The preferred name for the 11-family non-weather summary is `nonweather11-mPC`. Existing result locks may retain the legacy key `seen11_mPC` for backward compatibility; the underlying set excludes snow, frost, fog, and elastic transform.
+
+
+## V3.7 protocol reconciliation
+
+During reviewer-strengthening, the frozen A0 seed-0 clean reference was rerun under several native Ultralytics validation settings. The original formal V3.1 call, with `rect` and `half` omitted, reproduced clean AP50:95 = `0.6089874629020515` exactly. Explicitly forcing `rect=False` changed the metric. The public V3.1 evaluator therefore preserves the historical call by leaving those two arguments unspecified.
+
+This reconciliation changes no frozen checkpoint and no committed V3.1 aggregate result; it corrects the portable wrapper so that its validation semantics match the historical numerical path.

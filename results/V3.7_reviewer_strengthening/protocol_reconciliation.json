@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "protocol_id": "helmet-c-val-v3.1-deterministic-impulse-audited-glass-2026-09-29",
+  "checkpoint": "A0 seed 0",
+  "frozen_clean_AP50_95": 0.6089874629020515,
+  "historical_call": {
+    "rect": "argument omitted",
+    "half": "argument omitted",
+    "observed_clean_AP50_95": 0.6089874629020515,
+    "absolute_delta": 0.0
+  },
+  "explicit_rect_true_half_false": {
+    "observed_clean_AP50_95": 0.6089874629020515,
+    "absolute_delta": 0.0
+  },
+  "explicit_rect_false_half_false": {
+    "observed_clean_AP50_95": 0.607881,
+    "note": "does not reproduce the frozen clean reference"
+  },
+  "decision": "The public V3.1 numerical path preserves the historical native validator call by leaving rect and half unspecified."
+}
