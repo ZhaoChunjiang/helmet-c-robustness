@@ -10,11 +10,11 @@ Public evaluation-protocol and result-lock materials for the manuscript:
 
 This repository is **not an end-to-end training reproduction package**. It does not redistribute the SHWD source images or trained checkpoints, and it does not contain the full training code used to produce A0, A1, A1-WH, and A1-R10.
 
-What it does provide is the final **V3.1 evaluation protocol**, fixed split manifests, deterministic corruption/evaluation utilities, protocol notes, and machine-readable V3.6 manuscript result locks. For the V3.6 manuscript, the **only current public evaluation entry point is `scripts/v31/`**. Older generators, runners, and result folders are retained only as provenance and must not be used to reproduce current headline robustness numbers.
+What it does provide is the final **V3.1 evaluation protocol**, fixed split manifests, deterministic corruption/evaluation utilities, protocol notes, and machine-readable V3.7 manuscript result locks. For the V3.7 manuscript, the **only current public evaluation entry point is `scripts/v31/`**. Older generators, runners, and result folders are retained only as provenance and must not be used to reproduce current headline robustness numbers.
 
 A static lock-table check verifies committed result files only; it does **not** rerun models or constitute end-to-end experimental reproduction.
 
-## Final manuscript protocol (V3.6 / evaluator V3.1)
+## Final manuscript protocol (V3.7 / evaluator V3.1)
 
 The current headline results use the fixed **SHWD validation split (607 images, 9,925 objects)** and the deterministic Helmet-C-Val protocol.
 
@@ -51,7 +51,50 @@ Training seeds are `0`, `42`, and `3407`. Values below are mean ± sample standa
 
 Machine-readable copies are under `results/V3.1_final_4x3/`.
 
-## Controls added for manuscript V3.6
+## V3.7 reviewer-strengthening analyses
+
+The original V3.1 4-model × 3-seed lock above is unchanged. V3.7 adds targeted analyses requested during pre-submission review.
+
+### Elastic-transform sensitivity
+
+Because `elastic_transform` changes local geometry while the benchmark retains the original boxes, V3.7 also reports `mPC14`, which excludes elastic transform:
+
+| Metric | A0 | A1 (Corr-Aug) | Paired A1 − A0 |
+|---|---:|---:|---:|
+| mPC14 | 0.373739 ± 0.001229 | 0.519067 ± 0.000580 | +14.533 ± 0.070 pp |
+| elastic-transform mean AP | 0.543326 ± 0.001073 | 0.546203 ± 0.000385 | — |
+
+### Calibrated scale-stratified analysis
+
+The scale analysis is a separately calibrated post-hoc evaluator and does **not** replace native V3.1 headline ALL metrics. Its primary scale endpoint is mPC14.
+
+| Scale | A0 mPC14 | A1 mPC14 | Paired gain |
+|---|---:|---:|---:|
+| ES | 0.1422 ± 0.0042 | 0.2014 ± 0.0034 | +5.918 ± 0.713 pp |
+| S | 0.3154 ± 0.0022 | 0.4316 ± 0.0012 | +11.616 ± 0.242 pp |
+| M | 0.4825 ± 0.0037 | 0.6285 ± 0.0013 | +14.595 ± 0.487 pp |
+| L | 0.5795 ± 0.0027 | 0.7629 ± 0.0013 | +18.340 ± 0.398 pp |
+
+ES objects are the most fragile in absolute AP, while the absolute A1 gain is larger at larger scales. The better-supported ES-`person` subset contains 5,259 targets; ES-`hat` contains only 38 targets and is not used for a strong standalone claim.
+
+### YOLOv8n cross-architecture replication
+
+A seed-0 equal-budget YOLOv8n control gives:
+
+| Model | clean AP50:95 | mPC15 | mPC14 | rPC15 |
+|---|---:|---:|---:|---:|
+| A0 | 0.606886 | 0.390425 | 0.379773 | 64.33% |
+| A1 | 0.607050 | 0.518592 | 0.516783 | 85.43% |
+
+The A1−A0 changes are +0.016 pp clean AP, +12.817 pp mPC15, and +13.701 pp mPC14.
+
+### Final V3.1 mechanism screen
+
+C0/A3 were re-evaluated on the pre-specified six-blur + two-severe-noise Screen8 under the reconciled V3.1 path. Across three seeds, A3 reduces the clean–degraded representation discrepancy by 32.77% ± 0.44%, but the paired Screen8 detection gain is only +0.137 ± 0.078 pp. This supports a bounded conclusion: the selected representation discrepancy is controllable but is not a quantitative surrogate for the much larger robustness gain obtained from corruption-distribution coverage.
+
+Machine-readable V3.7 additions are under `results/V3.7_reviewer_strengthening/`.
+
+## Controls added for manuscript V3.7
 
 ### A1-WH: held-out synthetic weather family
 
@@ -100,7 +143,8 @@ configs/                     Helmet-C configuration
 splits/                      fixed SHWD split manifests
 scripts/v31/                 final deterministic V3.1 public reproduction utilities
 protocols/                   V3.1 protocol notes and supersession record
-results/V3.1_final_4x3/      final manuscript-level machine-readable results
+results/V3.1_final_4x3/      final native V3.1 4-model × 3-seed result lock
+results/V3.7_reviewer_strengthening/  V3.7 scale, mPC14, YOLOv8n, mechanism summaries
 results/three_seed/          LEGACY pre-V3.1 outputs retained for provenance
 results/formal/              LEGACY pre-V3.1 independent-test artifacts
 results/final_validation/    LEGACY pre-V3.1 manuscript summary
@@ -130,7 +174,7 @@ For a fresh Helmet-C-Val rerun, first run the determinism audit and then evaluat
 
 ## V3.1 environment record
 
-The current V3.1 environment/protocol record is documented in `environment/V31_ENVIRONMENT_LOCK.md`. The older `environment/FORMAL_ENVIRONMENT.md` is a **pre-V3.1 provenance record** and is not the V3.6 evaluation entry point.
+The current V3.1 environment/protocol record is documented in `environment/V31_ENVIRONMENT_LOCK.md`. The older `environment/FORMAL_ENVIRONMENT.md` is a **pre-V3.1 provenance record** and is not the V3.7 evaluation entry point.
 
 The captured core environment was:
 
@@ -145,9 +189,9 @@ input resolution    640 × 640
 GPU                 NVIDIA RTX 4090
 ```
 
-The original SHWD images and trained checkpoints are not redistributed here. Exact versions of some transitive image-stack dependencies (notably scikit-image, Pillow, and torchvision) were not captured in the original V3.1 run artifact; the repository records this limitation rather than inventing versions.
+The original SHWD images and trained checkpoints are not redistributed here. A later inventory of the original AutoDL workspace recovered scikit-image 0.25.2, Pillow 10.3.0, and torchvision 0.16.2+cu118. Because these values were not captured in a timestamped original V3.1 environment lock, they are documented only as a recovered workspace snapshot.
 
-The public V3.1 evaluator explicitly freezes the manuscript-critical validation settings used by the portable rerun path. See `environment/V31_ENVIRONMENT_LOCK.md` for the distinction between recorded original-run facts and the current public rerun contract.
+A V3.7 protocol-reconciliation check established that the historical V3.1 native `model.val()` call must leave `rect` and `half` unspecified, as in the original formal runner. That call reproduces the frozen A0 seed-0 clean AP50:95 exactly (`0.6089874629020515`); forcing `rect=False` changes the metric. See `environment/V31_ENVIRONMENT_LOCK.md`.
 
 ## Metric naming note
 
@@ -160,9 +204,9 @@ The folders `results/three_seed/`, `results/formal/`, and the older `results/fin
 > **SUPERSEDED FOR HEADLINE ROBUSTNESS METRICS.**
 > Do not use the old mPC/rPC, scale-stratified corrupted-AP, old independent-test corruption metrics, or the old pre-V3.1 Table 2 as the current manuscript result.
 
-The legacy `scripts/generate_helmet_c.py` seed convention and the pre-V3.1 v1.0.4 runner belong to the superseded development chain. They are retained for provenance only. They are **not** interchangeable with `scripts/v31/` and must not be used to regenerate V3.6 headline conditions.
+The legacy `scripts/generate_helmet_c.py` seed convention and the pre-V3.1 v1.0.4 runner belong to the superseded development chain. They are retained for provenance only. They are **not** interchangeable with `scripts/v31/` and must not be used to regenerate V3.7 headline conditions.
 
-The clean AP values remain useful provenance where explicitly referenced, but the manuscript V3.6 robustness claims are locked to `results/V3.1_final_4x3/`.
+The clean AP values remain useful provenance where explicitly referenced, but the manuscript V3.7 robustness claims are locked to `results/V3.1_final_4x3/`.
 
 ## Interpretation boundary
 
@@ -172,7 +216,7 @@ Helmet-C is a synthetic single-corruption benchmark. A1-WH holds out one synthet
 
 SHWD is publicly available from its original repository. This repository does not redistribute SHWD images, trained checkpoints, or large temporary corruption images. It provides the fixed split manifests, final V3.1 evaluation protocol and utilities, protocol notes, and machine-readable manuscript result locks.
 
-Two A1-R10 checkpoint SHA256 fields (training seeds 42 and 3407) are intentionally blank in `results/V3.1_final_4x3/checkpoint_identities.csv` because those hashes were not present in the synchronized provenance artifacts. They are not reconstructed or guessed. Exact scikit-image, Pillow, and torchvision versions were also not captured in the original V3.1 run artifact, so a newly built environment can be audited for determinism but cannot be claimed to reproduce every original corruption image byte-for-byte from the public files alone.
+The A1-R10 seed-42 and seed-3407 checkpoint SHA256 values that were absent from the earlier synchronized export were recovered from the original AutoDL workspace and are now recorded in `results/V3.1_final_4x3/checkpoint_identities.csv`. A later workspace inventory also recovered scikit-image 0.25.2, Pillow 10.3.0, and torchvision 0.16.2+cu118; these are recorded as a recovered workspace snapshot rather than retroactively treated as a timestamped original V3.1 environment lock.
 
 Complete frozen assignment manifests for A1-WH and all ten A1-R10 views are not included. Their intervention rules are documented in the manuscript and `assignments/README.md`; the repository therefore exposes the evaluation protocol and result lock, not a complete training-side reconstruction of these controls.
 
