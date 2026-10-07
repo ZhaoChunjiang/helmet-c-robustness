@@ -1,20 +1,6 @@
 name: Legacy pre-V3.1 Table-2 Verification
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "scripts/summarize_three_seed.py"
-      - "scripts/verify_table2.py"
-      - "results/three_seed/**"
-      - ".github/workflows/reproducibility.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "scripts/summarize_three_seed.py"
-      - "scripts/verify_table2.py"
-      - "results/three_seed/**"
-      - ".github/workflows/reproducibility.yml"
   workflow_dispatch:
 
 jobs:

@@ -10,11 +10,15 @@ Public evaluation-protocol and result-lock materials for the manuscript:
 
 This repository is **not an end-to-end training reproduction package**. It does not redistribute the SHWD source images or trained checkpoints, and it does not contain the full training code used to produce A0, A1, A1-WH, and A1-R10.
 
-What it does provide is the final **V3.1 evaluation protocol**, fixed split manifests, deterministic corruption/evaluation utilities, protocol notes, and machine-readable V3.7 manuscript result locks. For the V3.7 manuscript, the **only current public evaluation entry point is `scripts/v31/`**. Older generators, runners, and result folders are retained only as provenance and must not be used to reproduce current headline robustness numbers.
+What it does provide is the final **V3.1 evaluation protocol**, fixed split manifests, deterministic corruption/evaluation utilities, protocol notes, and machine-readable V3.7 reviewer-strengthening result locks carried unchanged into the submitted V3.7.1b manuscript. For the submitted V3.7.1b manuscript, the **only current public evaluation entry point is `scripts/v31/`**. Older generators, runners, and result folders are retained only as provenance and must not be used to reproduce current headline robustness numbers.
 
 A static lock-table check verifies committed result files only; it does **not** rerun models or constitute end-to-end experimental reproduction.
 
-## Final manuscript protocol (V3.7 / evaluator V3.1)
+### Submitted-manuscript repository snapshot
+
+The repository state used when the V3.7.1b manuscript was submitted is preserved on branch `submission-v3.7.1b-snapshot-20261002` at commit `c9185c0ad20b561158012cf3ddaf545ea2dc4698`. Subsequent `main` changes are documentation/CI clarity fixes only unless explicitly stated; they do not alter the frozen V3.1 result lock or manuscript numerical results.
+
+## Final manuscript protocol (V3.7.1b / evaluator V3.1)
 
 The current headline results use the fixed **SHWD validation split (607 images, 9,925 objects)** and the deterministic Helmet-C-Val protocol.
 
@@ -174,7 +178,7 @@ For a fresh Helmet-C-Val rerun, first run the determinism audit and then evaluat
 
 ## V3.1 environment record
 
-The current V3.1 environment/protocol record is documented in `environment/V31_ENVIRONMENT_LOCK.md`. The older `environment/FORMAL_ENVIRONMENT.md` is a **pre-V3.1 provenance record** and is not the V3.7 evaluation entry point.
+The current V3.1 environment/protocol record is documented in `environment/V31_ENVIRONMENT_LOCK.md`. The older `environment/FORMAL_ENVIRONMENT.md` is a **pre-V3.1 provenance record** and is not the V3.7.1b evaluation entry point.
 
 The captured core environment was:
 
@@ -204,9 +208,9 @@ The folders `results/three_seed/`, `results/formal/`, and the older `results/fin
 > **SUPERSEDED FOR HEADLINE ROBUSTNESS METRICS.**
 > Do not use the old mPC/rPC, scale-stratified corrupted-AP, old independent-test corruption metrics, or the old pre-V3.1 Table 2 as the current manuscript result.
 
-The legacy `scripts/generate_helmet_c.py` seed convention and the pre-V3.1 v1.0.4 runner belong to the superseded development chain. They are retained for provenance only. They are **not** interchangeable with `scripts/v31/` and must not be used to regenerate V3.7 headline conditions.
+The legacy `scripts/generate_helmet_c.py` seed convention and the pre-V3.1 v1.0.4 runner belong to the superseded development chain. They are retained for provenance only. They are **not** interchangeable with `scripts/v31/` and must not be used to regenerate V3.7.1b headline conditions.
 
-The clean AP values remain useful provenance where explicitly referenced, but the manuscript V3.7 robustness claims are locked to `results/V3.1_final_4x3/`.
+The clean AP values remain useful provenance where explicitly referenced, but the submitted manuscript V3.7.1b robustness claims are locked to `results/V3.1_final_4x3/`.
 
 ## Interpretation boundary
 

@@ -47,3 +47,5 @@ The repository does not claim to contain complete frozen assignment manifests fo
 - **A1-R10:** view 0 reproduces the frozen A1 assignment; views 1-9 deterministically permute the same complete joint `(corruption, severity)` multiset across the 5,457 training image IDs; the frozen 75-epoch schedule uses each view seven or eight times.
 
 These controls are described so their intervention is auditable, but this repository should not be interpreted as a complete training-side reconstruction package for those two controls.
+
+**Important provenance boundary.** The exact original per-image A1-WH remapping manifest, the nine additional A1-R10 view manifests, and the original training-side remapping/permutation implementation are not present in the synchronized public artifacts. Therefore the repository does **not** provide a newly reconstructed executable generator and does not invent a seed, hash rule, or permutation rule that was not preserved. The manuscript-level construction description and the committed result locks are the public evidence for these controls; exact end-to-end training reproduction would require the original private run artifacts.
