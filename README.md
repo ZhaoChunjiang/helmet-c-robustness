@@ -14,6 +14,10 @@ What it does provide is the final **V3.1 evaluation protocol**, fixed split mani
 
 A static lock-table check verifies committed result files only; it does **not** rerun models or constitute end-to-end experimental reproduction.
 
+### Submitted-manuscript repository snapshot
+
+The repository state used when the V3.7.1b manuscript was submitted is preserved on branch `submission-v3.7.1b-snapshot-20261002` at commit `c9185c0ad20b561158012cf3ddaf545ea2dc4698`. Subsequent `main` changes are documentation/CI clarity fixes only unless explicitly stated; they do not alter the frozen V3.1 result lock or manuscript numerical results.
+
 ## Final manuscript protocol (V3.7 / evaluator V3.1)
 
 The current headline results use the fixed **SHWD validation split (607 images, 9,925 objects)** and the deterministic Helmet-C-Val protocol.
