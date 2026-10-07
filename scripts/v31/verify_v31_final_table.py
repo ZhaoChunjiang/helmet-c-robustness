@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the machine-readable V3.1/V3.6 manuscript result lock."""
+"""Verify the machine-readable final V3.1 manuscript result lock."""
 from __future__ import annotations
 
 import csv
