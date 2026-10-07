@@ -52,8 +52,8 @@ The preferred name for the 11-family non-weather summary is `nonweather11-mPC`. 
 
 For each training seed, relative corruption performance is computed **before** cross-seed aggregation:
 
-- \(rPC15_{seed}=mPC15_{seed}/AP_{clean,seed}\)
-- \(weather\text{-}rPC_{seed}=weather\text{-}mPC_{seed}/AP_{clean,seed}\)
+- `rPC15_seed = mPC15_seed / clean_AP_seed`
+- `weather_rPC_seed = weather_mPC_seed / clean_AP_seed`
 
 The manuscript result lock then reports the **mean and sample standard deviation of these seed-level ratios** across seeds 0, 42, and 3407. It does not compute rPC by dividing the across-seed mean mPC by the across-seed mean clean AP.
 
