@@ -17,6 +17,7 @@ They were generated in response to pre-submission review requests for:
 - Scale-stratified values come from a separately calibrated post-hoc evaluator and are not substituted for native ALL values.
 - The C0/A3 endpoint is a pre-specified 8-condition screen (Blur6 + Noise2), not a 75-condition mechanism benchmark.
 - YOLOv8n is a seed-0 cross-architecture replication, not a multi-seed architecture benchmark.
+- In `yolov8n_replication.csv`, the `delta_A1_minus_A0_pp` row is a derived A1−A0 difference from the two seed-0 runs; its `seed` field is intentionally blank to distinguish a derived row from an evaluated regime/seed record.
 
 Protocol ID: `helmet-c-val-v3.1-deterministic-impulse-audited-glass-2026-09-29`
 
