@@ -1,6 +1,6 @@
 # V3.1 Environment and Evaluation Lock
 
-This file records the **current manuscript V3.7 / evaluator V3.1 public evaluation contract**.
+This file records the **current submitted manuscript V3.7.1b / evaluator V3.1 public evaluation contract**.
 
 Protocol ID:
 
@@ -18,7 +18,7 @@ It provides:
 - deterministic V3.1 corruption generation;
 - native Ultralytics validation utilities;
 - protocol notes;
-- machine-readable V3.7 result locks.
+- machine-readable V3.7 reviewer-strengthening result locks carried into V3.7.1b.
 
 It does **not** redistribute SHWD source images or trained checkpoints, and it does not contain the full A0/A1/A1-WH/A1-R10 training implementation.
 
@@ -104,11 +104,11 @@ This optional mode performs two full passes over all 75 corruption/severity cond
 
 ## Validation-set status
 
-The V3.7 headline robustness numbers are reported on the fixed 607-image SHWD validation split.
+The V3.7.1b headline robustness numbers are reported on the fixed 607-image SHWD validation split.
 
-The training pipeline uses Ultralytics training and the frozen `best.pt` checkpoints. The validation split is therefore part of the training-time model-selection process and is **not an untouched blind test set**. V3.7 deliberately labels the benchmark as Helmet-C-Val and does not present the V3.1 corruption numbers as independent-test results.
+The training pipeline uses Ultralytics training and the frozen `best.pt` checkpoints. The validation split is therefore part of the training-time model-selection process and is **not an untouched blind test set**. V3.7.1b deliberately labels the benchmark as Helmet-C-Val and does not present the V3.1 corruption numbers as independent-test results.
 
-The 1,517-image Test split and older pre-V3.1 Helmet-C-Test outputs are not used as V3.7 headline corruption evidence.
+The 1,517-image Test split and older pre-V3.1 Helmet-C-Test outputs are not used as V3.7.1b headline corruption evidence.
 
 ## Result-lock boundary
 
